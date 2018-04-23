@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestSettings id="67e75ce7-fbc4-4d0b-85f9-831171812650" name="TestSettings1" enableDefaultDataCollectors="false" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description><!--_locID_text="Description1"-->Estas são configurações padrão de teste para uma execução local de testes.</Description>
+  <Deployment enabled="false"/>
+</TestSettings>
