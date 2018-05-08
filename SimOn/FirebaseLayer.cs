@@ -25,6 +25,40 @@ namespace SimOn
         public FirebaseLayer()
         {
 
+            //FirebaseLayer firebase = new FirebaseLayer();
+            FirebaseDB firebaseDB = new FirebaseDB("https://simon-4288d.firebaseio.com");
+            FirebaseDB firebaseMarcas = firebaseDB.Node("");
+
+            var data = @"{ 'viaturas': {
+                            'FIAT': {
+                            'PUNTO': {
+                                              'x xx': {
+                                                        'Preco' : '15000'
+                                                        },
+                                              'xxx xxx': {
+                                                        'Preco' : '23000'
+                                                        },
+                                              'xxx xxx cddff': {
+                                                        'Preco' : '23000'
+                                                        }
+                                              }
+                                    }
+                           }
+                    }";
+
+            FirebaseResponse putResponse = firebaseMarcas.Put(data);
+            Console.Write(putResponse);
+            //,
+            //                        '2.0 D' : {
+            //    'marca' : 'FIAT','modelo' : 'PUNTO', 'versao' : '2.0 D', 'preco' : '23000'
+            //                                  }
+
+            var dataGet = @"{}";
+            Console.WriteLine("GET Request!");
+            FirebaseResponse getResponse = firebaseMarcas.Get();
+            Console.WriteLine(getResponse.Success);
+            if (getResponse.Success)
+            { Console.WriteLine(getResponse.JSONContent); }
 
 
 
@@ -77,7 +111,7 @@ namespace SimOn
                 Console.WriteLine($"{dino.Key} is {dino.Object.Height}m high.");
             }
             */
-            
+
         }
     }
 }

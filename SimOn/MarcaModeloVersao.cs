@@ -7,7 +7,7 @@ using LinqToExcel.Attributes;
 
 namespace SimOn
 {
-    class MarcaModeloVersao : MarcaModelo
+    internal class MarcaModeloVersao : MarcaModelo
     {
         [ExcelColumn("VERSAO")]
         public string descricaoVersao { get; set; }

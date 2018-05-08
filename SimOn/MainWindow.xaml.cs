@@ -21,8 +21,18 @@ namespace SimOn
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Variable definition.
         // Variable needed to update the UI from within the asynchronous task.
         private readonly SynchronizationContext synchronizationContext;
+        private DataSource dataSource { get {
+                if (rbExcel.IsChecked == true)
+                { return DataSource.Excel; }
+                else if (rbXml.IsChecked == true)
+                { return DataSource.XML; }
+                else
+                { return DataSource.FireBase; }
+            } }
+        #endregion
 
         public MainWindow()
         {
@@ -54,7 +64,7 @@ namespace SimOn
             this.lblStatus.Content = "A procurar as marcas disponiveis...";
             var taskFeetchedMarcas = Task.Run(() =>
             {
-                List<Marca> marcas = DataLayer.getMarcas();
+                List<Marca> marcas = DataLayer.GetMarcas();
                 carregaMarcas(marcas);
             });
 
@@ -65,10 +75,11 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
+                this.lblStatus.Content = "A procurar os modelos disponiveis...";
                 var taskFeetchedMarcasModelos = Task.Run(() =>
                 {
                     Marca marca = (Marca)e.AddedItems[0];
-                    List<MarcaModelo> modelos = DataLayer.getModelos(marca);
+                    List<MarcaModelo> modelos = DataLayer.GetModelos(marca);
                     carregaModelos(modelos);
                 });
 
@@ -80,10 +91,11 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
+                this.lblStatus.Content = "A procurar as versões disponiveis...";
                 var taskFeetchedVersoes = Task.Run(() =>
                 {
                     MarcaModelo modelo = (MarcaModelo)e.AddedItems[0];
-                    List<MarcaModeloVersao> versoes = DataLayer.getVersoes(modelo);
+                    List<MarcaModeloVersao> versoes = DataLayer.GetVersoes(modelo);
                     carregaVersoes(versoes);
                 });
 
@@ -96,10 +108,11 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
+                this.lblStatus.Content = "A procurar pvp...";
                 var taskFeetchedViatura = Task.Run(() =>
                 {
                     MarcaModeloVersao versao = (MarcaModeloVersao)e.AddedItems[0];
-                    Viatura viatura = DataLayer.getViatura(versao);
+                    Viatura viatura = DataLayer.GetViatura(versao);
                     this.actualizaPreco(viatura);
                 });
                 this.Cursor = Cursors.Wait;
@@ -150,6 +163,12 @@ namespace SimOn
                 this.lblStatus.Content = "";
             }), viatura);
         }
+
+        private void Rb_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         #endregion
+
     }
 }

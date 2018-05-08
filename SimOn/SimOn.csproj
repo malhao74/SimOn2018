@@ -48,6 +48,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>car-fill-from-frontal-view.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Firebase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FirebaseDatabase.net.3.3.3\lib\netstandard1.1\Firebase.dll</HintPath>
@@ -164,6 +167,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CalculoFinanceiro.cs" />
+    <Compile Include="DataLayerExcel.cs" />
+    <Compile Include="DataLayerFireBase.cs" />
+    <Compile Include="DataLayerXml.cs" />
     <Compile Include="FirebaseDB.cs" />
     <Compile Include="FirebaseLayer.cs" />
     <Compile Include="FirebaseRequest.cs" />
@@ -201,6 +207,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="car-fill-from-frontal-view.ico" />
+    <Content Include="l201803C.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

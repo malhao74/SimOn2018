@@ -41,7 +41,7 @@ namespace SimOn
             var cliente = new HttpClient();
             var msg = new HttpRequestMessage(method, uri);
             msg.Headers.Add("user-agent", USER_AGENT);
-            if (json == null)
+            if (json != null)
             {
                 msg.Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             }

@@ -9,7 +9,7 @@ using LinqToExcel.Attributes;
 namespace SimOn
 {
     // The IEquatable protocol is needed for the list distinct usage.
-    class Marca : IEquatable<Marca>
+    internal class Marca : IEquatable<Marca>
     {
         [ExcelColumn("MARCA")]
         public string descricaoMarca { get; set; }
