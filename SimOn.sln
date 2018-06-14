@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimOn", "SimOn\SimOn.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{330642DD-443C-4295-B677-4AEEF08AD6A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimOnTests", "SimOnTests\SimOnTests.csproj", "{E46FF33D-58A5-405A-8F76-72F9254BE78D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{AAB8F6EE-9A0F-4A8A-B09B-41E1877AC175}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,10 @@ Global
 		{33B26B59-D8E0-48E8-81B1-1032425E6DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33B26B59-D8E0-48E8-81B1-1032425E6DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33B26B59-D8E0-48E8-81B1-1032425E6DA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E46FF33D-58A5-405A-8F76-72F9254BE78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E46FF33D-58A5-405A-8F76-72F9254BE78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E46FF33D-58A5-405A-8F76-72F9254BE78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E46FF33D-58A5-405A-8F76-72F9254BE78D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAB8F6EE-9A0F-4A8A-B09B-41E1877AC175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB8F6EE-9A0F-4A8A-B09B-41E1877AC175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB8F6EE-9A0F-4A8A-B09B-41E1877AC175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB8F6EE-9A0F-4A8A-B09B-41E1877AC175}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
