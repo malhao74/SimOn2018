@@ -19,34 +19,41 @@ namespace SimOn
         private static readonly string ficheiroXml = "Dados/l201803C.xml";
         #endregion
 
+        #region Metodos internos
         internal static List<Marca> GetMarcasExcel()
         {
-            Func<Viatura, bool> perdicate = x => true;
+            //Func<Viatura, bool> perdicate = x => true;
+            bool perdicate(Viatura x) => true;
             List<Marca> marcas = GetViaturas(perdicate).Cast<Marca>().ToList();
             return marcas.Distinct().ToList();
         }
         internal static List<MarcaModelo> GetModelos(Marca marca)
         {
-            Func<Viatura, bool> perdicate = x => x.DescricaoMarca == marca.DescricaoMarca;
+            //Func<Viatura, bool> perdicate = x => x.DescricaoMarca == marca.DescricaoMarca;
+            bool perdicate(Viatura x) => x.DescricaoMarca == marca.DescricaoMarca;
             List<MarcaModelo> modelos = GetViaturas(perdicate).Cast<MarcaModelo>().ToList();
             return modelos.Distinct().ToList();
         }
         internal static List<MarcaModeloVersao> GetVersoes(MarcaModelo modelo)
         {
-            Func<Viatura, bool> perdicate = x => x.DescricaoMarca == modelo.DescricaoMarca &&
+            //Func<Viatura, bool> perdicate = x => x.DescricaoMarca == modelo.DescricaoMarca &&
+            //                                     x.DescricaoModelo == modelo.DescricaoModelo;
+            bool perdicate(Viatura x) => x.DescricaoMarca == modelo.DescricaoMarca &&
                                                  x.DescricaoModelo == modelo.DescricaoModelo;
             List<MarcaModeloVersao> versoes = GetViaturas(perdicate).Cast<MarcaModeloVersao>().ToList();
             return versoes;
         }
         internal static Viatura GetViatura(MarcaModeloVersao versao)
         {
-            Func<Viatura, bool> perdicate = x => x.DescricaoMarca == versao.DescricaoMarca &&
+            //Func<Viatura, bool> perdicate = x => x.DescricaoMarca == versao.DescricaoMarca &&
+            //                                     x.DescricaoModelo == versao.DescricaoModelo &&
+            //                                     x.DescricaoVersao == versao.DescricaoVersao;
+            bool perdicate(Viatura x) => x.DescricaoMarca == versao.DescricaoMarca &&
                                                  x.DescricaoModelo == versao.DescricaoModelo &&
                                                  x.DescricaoVersao == versao.DescricaoVersao;
             List<Viatura> viaturas = GetViaturas(perdicate);
             return viaturas.FirstOrDefault();
         }
-
         internal static List<Viatura> GetViaturas(Func<Viatura,bool> perdicate)
         {
             System.Xml.Linq.XElement eurotax = System.Xml.Linq.XElement.Load(ficheiroXml);
@@ -58,5 +65,6 @@ namespace SimOn
                                     }).Where(perdicate).ToList();
             return viaturas;
         }
+        #endregion
     }
 }

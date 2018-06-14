@@ -7,6 +7,8 @@ namespace SimOn
     {
         private readonly string rootNode;
 
+
+        #region Metodos publicos
         public FirebaseDB(string baseUrl)
         { this.rootNode = baseUrl; }
 
@@ -47,5 +49,6 @@ namespace SimOn
         {
             return this.rootNode;
         }
+        #endregion
     }
 }

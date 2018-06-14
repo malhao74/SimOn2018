@@ -11,9 +11,7 @@ namespace SimOn
     /// </summary>
     class DataLayer
     {
-
-
-        #region public methods
+        #region Metodos publicos
         public static List<Marca> GetMarcas()
         {
             return DataLayerExcel.GetMarcasExcel();
@@ -37,9 +35,6 @@ namespace SimOn
             return DataLayerExcel.GetViaturaExcel(versao);
         }
 
-        #endregion
-
-        #region Private methods.
         #endregion
     }
 }

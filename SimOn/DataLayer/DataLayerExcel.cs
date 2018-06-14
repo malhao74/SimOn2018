@@ -10,11 +10,12 @@ namespace SimOn
     public enum DataSource { Excel, XML, FireBase}
     public static class DataLayerExcel
     {
-        #region Variable definition.
+        #region Declaracao de variaveis
         public static string folhaExcel = AppContext.BaseDirectory.ToString() + @"Dados\L201803C.xls";
         public static string workSheet = "LIGEIROS";
         #endregion
 
+        #region Metodos internos
         internal static List<Marca> GetMarcasExcel()
         {
             var excel = new ExcelQueryFactory(folhaExcel);
@@ -73,5 +74,6 @@ namespace SimOn
                           select c;
             return viatura.FirstOrDefault();
         }
+        #endregion
     }
 }

@@ -4,11 +4,14 @@ namespace SimOn
 {
     class FirebaseResponse
     {
+        #region Declaracao de variaveis
         public bool Success;
         public string JSONContent;
         public string ErrorMessage;
         public HttpResponseMessage HttpResponse;
+        #endregion
 
+        #region Metodos publicos
         public FirebaseResponse()
         { }
 
@@ -19,5 +22,6 @@ namespace SimOn
             this.HttpResponse = httpResponse;
             this.JSONContent = jsonContent;
         }
+        #endregion
     }
 }

@@ -5,12 +5,15 @@ namespace SimOn
 {
     class FirebaseRequest
     {
+        #region Declaracao de variaveis
         private const string JSON_SUFFIX = ".json";
 
         private readonly HttpMethod Method;
         private readonly string JSON;
         private readonly string Uri;
+        #endregion
 
+        #region Metodos publicos
         public FirebaseRequest(HttpMethod method, string uri, string jsonString = null)
         {
             this.Method = method;
@@ -61,5 +64,6 @@ namespace SimOn
 
             return firebaseResponse;
         }
+        #endregion
     }
 }
