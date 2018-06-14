@@ -16,12 +16,6 @@ namespace SimOn
             KeyDown += TextBoxCurrency_KeyDown;
             GotFocus += TextBoxCurrency_GotFocus;
             LostFocus += TextBoxCurrency_LostFocus;
-            TextChanged += TextBoxCurrency_TextChanged;
-        }
-
-        private void TextBoxCurrency_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBoxCurrency_LostFocus(sender, e);
         }
 
         public double GetValue()
@@ -33,13 +27,13 @@ namespace SimOn
         #region Metodos Privados
         private void TextBoxCurrency_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            double valor = GetValue(); // Convert.ToDouble("0" + Text);
+            double valor = Convert.ToDouble("0" + Text);
             Text = valor.ToString("C");
         }
 
         private void TextBoxCurrency_GotFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            Text = GetValue().ToString(); // Text.Replace(" ","").Replace("€","");
+            Text = Text.Replace(" ","").Replace("€","");
         }
 
         private void TextBoxCurrency_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

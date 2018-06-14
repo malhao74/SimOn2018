@@ -15,6 +15,7 @@ namespace SimOn
     /// </summary>
     class FirebaseLayer
     {
+
         public FirebaseLayer()
         {
 
@@ -46,7 +47,7 @@ namespace SimOn
             //    'marca' : 'FIAT','modelo' : 'PUNTO', 'versao' : '2.0 D', 'preco' : '23000'
             //                                  }
 
-            //var dataGet = @"{}";
+            var dataGet = @"{}";
             Console.WriteLine("GET Request!");
             FirebaseResponse getResponse = firebaseMarcas.Get();
             Console.WriteLine(getResponse.Success);

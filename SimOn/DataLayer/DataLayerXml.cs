@@ -20,7 +20,7 @@ namespace SimOn
         #endregion
 
         #region Metodos internos
-        internal static List<Marca> GetMarcas()
+        internal static List<Marca> GetMarcasExcel()
         {
             //Func<Viatura, bool> perdicate = x => true;
             bool perdicate(Viatura x) => true;

@@ -34,9 +34,9 @@
         <TextBox x:Name="txtMensalidade" HorizontalAlignment="Left" Margin="649,78,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
         <GroupBox x:Name="gpFonte" Header="Escolha a fonte da informação" HorizontalAlignment="Left" Margin="545,122,0,0" VerticalAlignment="Top" Height="110" Width="225">
             <Grid >
-                <RadioButton x:Name="rbExcel" Content="Excel" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Checked="Rb_Checked"/>
-                <RadioButton x:Name="rbXml" Content="XML" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Checked="Rb_Checked"/>
-                <RadioButton x:Name="rbFireBase" Content="FireBase" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Checked="Rb_Checked"/>
+                <RadioButton x:Name="rbExcel" Content="Excel" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Click="Rb_Click"/>
+                <RadioButton x:Name="rbXml" Content="XML" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="rbFireBase" Content="FireBase" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
         <DockPanel>
