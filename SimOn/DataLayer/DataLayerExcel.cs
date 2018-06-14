@@ -7,7 +7,6 @@ using LinqToExcel;
 
 namespace SimOn
 {
-    public enum DataSource { Excel, XML, FireBase}
     public static class DataLayerExcel
     {
         #region Declaracao de variaveis
@@ -16,7 +15,7 @@ namespace SimOn
         #endregion
 
         #region Metodos internos
-        internal static List<Marca> GetMarcasExcel()
+        internal static List<Marca> GetMarcas()
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             //excel.AddMapping("precoNovo", "PNOVO");
@@ -30,7 +29,7 @@ namespace SimOn
             marcas = marcasUnicas.ToList();
             return marcas;
         }
-        internal static List<MarcaModelo> GetModelosExcel(Marca marca)
+        internal static List<MarcaModelo> GetModelos(Marca marca)
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             //excel.AddMapping("descricaoMarca", "MARCA");
@@ -48,7 +47,7 @@ namespace SimOn
             //viaturas..Aggregate(viatura => )
             return modelos;
         }
-        internal static List<MarcaModeloVersao> GetVersoesExcel(MarcaModelo modelo)
+        internal static List<MarcaModeloVersao> GetVersoes(MarcaModelo modelo)
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             //excel.AddMapping("descricaoMarca", "MARCA");
@@ -66,7 +65,7 @@ namespace SimOn
             //viaturas..Aggregate(viatura => )
             return versoes;
         }
-        internal static Viatura GetViaturaExcel(MarcaModeloVersao versao)
+        internal static Viatura GetViatura(MarcaModeloVersao versao)
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             var viatura = from c in excel.Worksheet<Viatura>(workSheet)
