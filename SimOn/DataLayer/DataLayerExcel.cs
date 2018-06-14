@@ -10,7 +10,7 @@ namespace SimOn
     public enum DataSource { Excel, XML, FireBase}
     public static class DataLayerExcel
     {
-        #region Variable definition.
+        #region Definicao de variaveis
         public static string folhaExcel = AppContext.BaseDirectory.ToString() + @"\L201803C.xls";
         public static string workSheet = "LIGEIROS";
         #endregion

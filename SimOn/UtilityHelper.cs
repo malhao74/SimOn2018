@@ -10,6 +10,7 @@ namespace SimOn
     {
         private const string USER_AGENT = "firebase-net/1.0";
 
+        #region Metodos publicos
         public static bool ValidadeURI(string url)
         {
             Uri locUrl;
@@ -47,5 +48,6 @@ namespace SimOn
             }
             return cliente.SendAsync(msg);
         }
+        #endregion
     }
 }

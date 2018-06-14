@@ -7,9 +7,9 @@ namespace SimOn
     {
         private const string JSON_SUFFIX = ".json";
 
-        private HttpMethod Method;
-        private string JSON;
-        private string Uri;
+        private readonly HttpMethod Method;
+        private readonly string JSON;
+        private readonly string Uri;
 
         public FirebaseRequest(HttpMethod method, string uri, string jsonString = null)
         {

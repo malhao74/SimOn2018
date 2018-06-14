@@ -5,34 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimOn"
         mc:Ignorable="d"
-        Title="SimOn" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="SimOn" Height="450" Width="800" Loaded="Window_Loaded" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="butCalcular" Content="Calcular" HorizontalAlignment="Left" Margin="691,271,0,0" VerticalAlignment="Top" Width="75" Click="butCalcular_Click" Height="20"/>
+        <Button x:Name="butCalcular" Content="Calcular" HorizontalAlignment="Left" Margin="691,271,0,0" VerticalAlignment="Top" Width="75" Click="ButCalcular_Click" Height="20"/>
 
         <Label x:Name="lblMarca" Content="Marca" HorizontalAlignment="Left" Margin="69,78,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
-        <ComboBox x:Name="cbMarcas" HorizontalAlignment="Left" Margin="119,78,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbMarcas_SelectionChanged" Height="21" RenderTransformOrigin="1.051,0.71"/>
+        <ComboBox x:Name="cbMarcas" HorizontalAlignment="Left" Margin="119,78,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CbMarcas_SelectionChanged" Height="21" RenderTransformOrigin="1.051,0.71"/>
         <Label x:Name="lblModelo" Content="Modelo" HorizontalAlignment="Left" Margin="69,122,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
-        <ComboBox x:Name="cbModelos" HorizontalAlignment="Left" Margin="119,122,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbModelos_SelectionChanged" Height="21" RenderTransformOrigin="0.986,0.42"/>
+        <ComboBox x:Name="cbModelos" HorizontalAlignment="Left" Margin="119,122,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CbModelos_SelectionChanged" Height="21" RenderTransformOrigin="0.986,0.42"/>
         <Label x:Name="lblVersao" Content="Versão" HorizontalAlignment="Left" Margin="69,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
-        <ComboBox x:Name="cbVersoes" HorizontalAlignment="Left" Margin="119,169,0,0" VerticalAlignment="Top" Width="120" Height="21" SelectionChanged="cbVersoes_SelectionChanged"/>
+        <ComboBox x:Name="cbVersoes" HorizontalAlignment="Left" Margin="119,169,0,0" VerticalAlignment="Top" Width="120" Height="21" SelectionChanged="CbVersoes_SelectionChanged"/>
         <Label x:Name="lblPreco" Content="Preço" HorizontalAlignment="Left" Margin="69,209,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
-        <TextBox x:Name="txtPreco" HorizontalAlignment="Left" Margin="119,209,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
+        <local:TextBoxCurrency x:Name="txtPreco" HorizontalAlignment="Left" Margin="119,209,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
 
         <Label x:Name="lblEntradaInicial" Content="Entrada inicial" HorizontalAlignment="Left" Margin="280,78,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
-        <TextBox x:Name="txtEntradaInicial" HorizontalAlignment="Left" Margin="400,78,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
+        <local:TextBoxCurrency x:Name="txtEntradaInicial" HorizontalAlignment="Left" Margin="400,78,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
         <Label x:Name="lblResidual" Content="Residual" HorizontalAlignment="Left" Margin="280,122,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
-        <TextBox x:Name="txtResidual" HorizontalAlignment="Left" Margin="400,122,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
+        <local:TextBoxCurrency x:Name="txtResidual" HorizontalAlignment="Left" Margin="400,122,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
         <Label x:Name="lblDuracao" Content="Duração" HorizontalAlignment="Left" Margin="280,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
         <TextBox x:Name="txtDuracao" HorizontalAlignment="Left" Margin="400,169,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
         <Label x:Name="lblTaxa" Content="Taxa" HorizontalAlignment="Left" Margin="280,209,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
         <TextBox x:Name="txtTaxa" HorizontalAlignment="Left" Margin="400,209,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
 
         <Label x:Name="lblMensalidade" Content="Mensalidade" HorizontalAlignment="Left" Margin="545,78,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
-        <TextBox x:Name="txtMensalidade" HorizontalAlignment="Left" Margin="649,78,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
-        <GroupBox x:Name="gpFonte" Content=" Escolha a fonte da informação " HorizontalAlignment="Left" Margin="545,122,0,0" VerticalAlignment="Top" Height="110" Width="225">
+        <TextBox x:Name="txtMensalidade" HorizontalAlignment="Left" Margin="649,78,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120" IsEnabled="False"/>
+        <GroupBox x:Name="gpFonte" Header="Dados"  HorizontalAlignment="Left" Margin="545,122,0,0" VerticalAlignment="Top" Height="110" Width="225">
+            <Grid>
+                <RadioButton x:Name="rbExcel" Content="Excel" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" IsChecked="True" Click="Rb_Click"/>
+                <RadioButton x:Name="rbXml" Content="XML" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="rbFireBase" Content="FireBase" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top"/>
+            </Grid>
         </GroupBox>
         <DockPanel>
             <StatusBar x:Name="statusBar" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Height="35">
@@ -41,9 +46,6 @@
                 </StatusBarItem>
             </StatusBar>
         </DockPanel>
-        <RadioButton x:Name="rbExcel" Content="Excel" HorizontalAlignment="Left" Margin="557,145,0,0" VerticalAlignment="Top" IsChecked="True" Click="Rb_Click"/>
-        <RadioButton x:Name="rbXml" Content="XML" HorizontalAlignment="Left" Margin="557,164,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="rbFireBase" Content="FireBase" HorizontalAlignment="Left" Margin="557,183,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

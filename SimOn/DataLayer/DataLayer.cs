@@ -11,9 +11,11 @@ namespace SimOn
     /// </summary>
     class DataLayer
     {
+        // TODO: Implementar propriedade para poder mudar entre excel, xml e firebase.
+        // TODO: Testar implementar o DataLayer do firebase.
+        // TODO: Alimentar a base de dados do firebase. 
 
-
-        #region public methods
+        #region Metodos publicos
         public static List<Marca> GetMarcas()
         {
             return DataLayerExcel.GetMarcasExcel();
@@ -37,9 +39,6 @@ namespace SimOn
             return DataLayerExcel.GetViaturaExcel(versao);
         }
 
-        #endregion
-
-        #region Private methods.
         #endregion
     }
 }

@@ -166,19 +166,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CalculoFinanceiro.cs" />
-    <Compile Include="DataLayerExcel.cs" />
-    <Compile Include="DataLayerFireBase.cs" />
-    <Compile Include="DataLayerXml.cs" />
-    <Compile Include="FirebaseDB.cs" />
-    <Compile Include="FirebaseLayer.cs" />
-    <Compile Include="FirebaseRequest.cs" />
-    <Compile Include="FirebaseResponse.cs" />
-    <Compile Include="Marca.cs" />
-    <Compile Include="MarcaModelo.cs" />
-    <Compile Include="MarcaModeloVersao.cs" />
+    <Compile Include="Modelos\CalculoFinanceiro.cs" />
+    <Compile Include="DataLayer\DataLayerExcel.cs" />
+    <Compile Include="DataLayer\DataLayerFireBase.cs" />
+    <Compile Include="DataLayer\DataLayerXml.cs" />
+    <Compile Include="DataLayer\FirebaseDB.cs" />
+    <Compile Include="DataLayer\FirebaseLayer.cs" />
+    <Compile Include="DataLayer\FirebaseRequest.cs" />
+    <Compile Include="DataLayer\FirebaseResponse.cs" />
+    <Compile Include="Modelos\Marca.cs" />
+    <Compile Include="Modelos\MarcaModelo.cs" />
+    <Compile Include="Modelos\MarcaModeloVersao.cs" />
+    <Compile Include="TextBoxCurrency.cs" />
     <Compile Include="UtilityHelper.cs" />
-    <Compile Include="Viatura.cs" />
+    <Compile Include="Modelos\Viatura.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -187,7 +188,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataLayer.cs" />
+    <Compile Include="DataLayer\DataLayer.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -208,14 +209,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="car-fill-from-frontal-view.ico" />
-    <Content Include="l201803C.xml">
+    <Content Include="Dados\l201803C.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="L201803C.xls">
+    <Content Include="Dados\L201803C.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

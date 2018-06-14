@@ -5,7 +5,7 @@ namespace SimOn
 {
     class FirebaseDB
     {
-        private string rootNode;
+        private readonly string rootNode;
 
         public FirebaseDB(string baseUrl)
         { this.rootNode = baseUrl; }
