@@ -11,7 +11,7 @@ namespace SimOn
     public static class DataLayerExcel
     {
         #region Variable definition.
-        public static string folhaExcel = AppContext.BaseDirectory.ToString() + @"\L201803C.xls";
+        public static string folhaExcel = AppContext.BaseDirectory.ToString() + @"Dados\L201803C.xls";
         public static string workSheet = "LIGEIROS";
         #endregion
 

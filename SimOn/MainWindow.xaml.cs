@@ -56,7 +56,7 @@ namespace SimOn
                                                                 residual,
                                                                 duracao,
                                                                 taxa);
-            this.txtMensalidade.Text = calculo.mensalidade.ToString("C");
+            this.txtMensalidade.Text = calculo.Mensalidade.ToString("C");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -15,8 +15,8 @@ namespace SimOn
         //var marcasUnicas = marcas.Distinct();
 
         //    return new List<Marca>();
-        #region Variable definition.
-        private static string ficheiroXml = "l201803C.xml";
+        #region Definicao de variaveis
+        private static string ficheiroXml = "Dados/l201803C.xml";
         #endregion
 
         internal static List<Marca> GetMarcasExcel()
