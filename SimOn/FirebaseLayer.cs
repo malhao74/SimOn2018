@@ -15,12 +15,6 @@ namespace SimOn
     /// </summary>
     class FirebaseLayer
     {
-        private string apiKey= "AIzaSyCnoDFAFv-O2_pjssigH4ck-n8gzMZ9L5U";
-        private string authDomain = "simon-4288d.firebaseapp.com";
-        private string databaseURL = "https://simon-4288d.firebaseio.com";
-        private string projectId = "simon-4288d";
-        private string storageBucket = "simon-4288d.appspot.com";
-        private string messagingSenderId = "993821413586";
 
         public FirebaseLayer()
         {
