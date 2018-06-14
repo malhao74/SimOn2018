@@ -44,11 +44,11 @@ namespace SimOn
         // Button to calculate the instalment.
         private void ButCalcular_Click(object sender, RoutedEventArgs e)
         {
-            double pvp = Convert.ToDouble(this.txtPreco.Text);
-            double entradaInicial = Convert.ToDouble(this.txtEntradaInicial.Text);
+            double pvp = txtPreco.GetValue();
+            double entradaInicial = txtEntradaInicial.GetValue();
             int duracao = Convert.ToInt32(this.txtDuracao.Text);
             double taxa = Convert.ToDouble(this.txtTaxa.Text);
-            double residual = Convert.ToDouble(this.txtResidual.Text);
+            double residual = txtResidual.GetValue();
             
             CalculoFinanceiro calculo = new CalculoFinanceiro(Produto.credito,
                                                                 pvp,
@@ -125,7 +125,7 @@ namespace SimOn
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbMarcas.DisplayMemberPath = "descricaoMarca";
+                this.cbMarcas.DisplayMemberPath = "DescricaoMarca";
                 this.cbMarcas.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = feetchedMarcas });
                 this.Cursor = Cursors.Arrow;
                 this.lblStatus.Content = "";
@@ -136,7 +136,7 @@ namespace SimOn
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbModelos.DisplayMemberPath = "descricaoModelo";
+                this.cbModelos.DisplayMemberPath = "DescricaoModelo";
                 this.cbModelos.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = feetchedMarcaModelos });
                 this.Cursor = Cursors.Arrow;
                 this.lblStatus.Content = "";
@@ -147,7 +147,7 @@ namespace SimOn
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbVersoes.DisplayMemberPath = "descricaoVersao";
+                this.cbVersoes.DisplayMemberPath = "DescricaoVersao";
                 this.cbVersoes.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = feetchedVersoes });
                 this.Cursor = Cursors.Arrow;
                 this.lblStatus.Content = "";

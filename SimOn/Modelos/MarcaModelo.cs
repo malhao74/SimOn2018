@@ -20,7 +20,7 @@ namespace SimOn
         {
 
             //Check whether the compared object is null. 
-            if (other is null) return false;
+            if (Object.ReferenceEquals(other,null)) return false;
 
             //Check whether the compared object references the same data. 
             if (Object.ReferenceEquals(this, other)) return true;

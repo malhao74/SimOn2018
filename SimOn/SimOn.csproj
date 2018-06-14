@@ -183,6 +183,7 @@
     <Compile Include="Modelos\Marca.cs" />
     <Compile Include="Modelos\MarcaModelo.cs" />
     <Compile Include="Modelos\MarcaModeloVersao.cs" />
+    <Compile Include="TextBoxCurrency.cs" />
     <Compile Include="UtilityHelper.cs" />
     <Compile Include="Modelos\Viatura.cs" />
     <Page Include="MainWindow.xaml">
