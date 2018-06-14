@@ -13,12 +13,12 @@ namespace SimOn
     /// </summary>
     internal class Viatura : MarcaModeloVersao
     {
-        #region Variables declaration
+        #region Declaracao de variaveis
         [ExcelColumn("PNOVO")]
-        public double precoNovo { get; set; }
+        public double PrecoNovo { get; set; }
         #endregion
 
-        #region Metodos publicos.
+        #region Metodos publicos
         public Viatura() { }
 
         #endregion

@@ -21,155 +21,183 @@ namespace SimOn
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Declaracao de variaceis
+        #region Declaracao de variaveis
         // Variable needed to update the UI from within the asynchronous task.
         private readonly SynchronizationContext synchronizationContext;
-        private DataSource DataSource { get {
-                if (rbExcel.IsChecked == true)
-                { return DataSource.Excel; }
-                else if (rbXml.IsChecked == true)
-                { return DataSource.XML; }
-                else
-                { return DataSource.FireBase; }
-            } }
+        private DataSource DataSource { get; set; }
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
-            synchronizationContext = SynchronizationContext.Current;           
+            synchronizationContext = SynchronizationContext.Current;
         }
 
-        #region Events
-        // Button to calculate the instalment.
+        #region Eventos
+        // Click do calculo da prestacao
         private void ButCalcular_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Verificar dados introduzidos pelo utilizador.
-            double pvp = Convert.ToDouble(this.txtPreco.Text);
-            double entradaInicial = Convert.ToDouble(this.txtEntradaInicial.Text);
+            double pvp = txtPreco.GetValue();
+            double entradaInicial = txtEntradaInicial.GetValue();
             int duracao = Convert.ToInt32(this.txtDuracao.Text);
             double taxa = Convert.ToDouble(this.txtTaxa.Text);
-            double residual = Convert.ToDouble(this.txtResidual.Text);
-            
+            double residual = txtResidual.GetValue();
+
             CalculoFinanceiro calculo = new CalculoFinanceiro(Produto.credito,
                                                                 pvp,
                                                                 entradaInicial,
                                                                 residual,
                                                                 duracao,
                                                                 taxa);
-            this.txtMensalidade.Text = calculo.mensalidade.ToString("C");
+            txtMensalidade.Text = calculo.Mensalidade.ToString("C");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {   
-            this.lblStatus.Content = "A procurar as marcas disponiveis...";
+        {
+            SetDataSource();
+
+            lblStatus.Content = "A procurar as marcas disponiveis...";
             var taskFeetchedMarcas = Task.Run(() =>
             {
-                List<Marca> marcas = DataLayer.GetMarcas();
+                List<Marca> marcas = DataLayer.GetMarcas(DataSource);
                 CarregaMarcas(marcas);
             });
 
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
         }
 
+        // Escolheu uma marca, vai buscar os modelos associados à marca.
         private void CbMarcas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
             {
-                this.lblStatus.Content = "A procurar os modelos disponiveis...";
+                lblStatus.Content = "A procurar os modelos disponiveis...";
                 var taskFeetchedMarcasModelos = Task.Run(() =>
                 {
                     Marca marca = (Marca)e.AddedItems[0];
-                    List<MarcaModelo> modelos = DataLayer.GetModelos(marca);
+                    List<MarcaModelo> modelos = DataLayer.GetModelos(DataSource, marca);
                     CarregaModelos(modelos);
                 });
 
-                this.Cursor = Cursors.Wait;
+                Cursor = Cursors.Wait;
             }
         }
 
+        // Escolheu um modelo, vai buscar as versões associadas ao modelo.
         private void CbModelos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
             {
-                this.lblStatus.Content = "A procurar as versões disponiveis...";
+                lblStatus.Content = "A procurar as versões disponiveis...";
                 var taskFeetchedVersoes = Task.Run(() =>
                 {
                     MarcaModelo modelo = (MarcaModelo)e.AddedItems[0];
-                    List<MarcaModeloVersao> versoes = DataLayer.GetVersoes(modelo);
+                    List<MarcaModeloVersao> versoes = DataLayer.GetVersoes(DataSource, modelo);
                     CarregaVersoes(versoes);
                 });
 
-                this.Cursor = Cursors.Wait;
+                Cursor = Cursors.Wait;
 
             }
         }
 
+        // Escolheu uma versao, vai o preço da mesma.
         private void CbVersoes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
             {
-                this.lblStatus.Content = "A procurar pvp...";
+                lblStatus.Content = "A procurar pvp...";
                 var taskFeetchedViatura = Task.Run(() =>
                 {
-                    MarcaModeloVersao versao = (MarcaModeloVersao)e.AddedItems[0];
-                    Viatura viatura = DataLayer.GetViatura(versao);
-                    this.ActualizaPreco(viatura);
+                    MarcaModeloVersao versao = (MarcaModeloVersao)e.AddedItems[0];                    
+                    Viatura viatura = DataLayer.GetViatura(DataSource, versao);
+                    ActualizaPreco(viatura);
                 });
-                this.Cursor = Cursors.Wait;
+                Cursor = Cursors.Wait;
             }
+        }
+
+        // Quando um dos radiobuttons da datasource e carregado, define a datasource a usar.
+        private void Rb_Checked(object sender, RoutedEventArgs e)
+        {
+            SetDataSource();
         }
         #endregion
 
         #region Metodos privados
-        private void CarregaMarcas(List<Marca> feetchedMarcas)
+        private void CarregaMarcas(List<Marca> fetchedMarcas)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbMarcas.DisplayMemberPath = "descricaoMarca";
-                this.cbMarcas.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = feetchedMarcas });
-                this.Cursor = Cursors.Arrow;
-                this.lblStatus.Content = "";
-            }), feetchedMarcas);
+                cbMarcas.DisplayMemberPath = "DescricaoMarca";
+                cbMarcas.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcas });
+                Cursor = Cursors.Arrow;
+                lblStatus.Content = "";
+            }), fetchedMarcas);
         }
 
-        private void CarregaModelos(List<MarcaModelo> feetchedMarcaModelos)
+        private void CarregaModelos(List<MarcaModelo> fetchedMarcaModelos)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbModelos.DisplayMemberPath = "descricaoModelo";
-                this.cbModelos.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = feetchedMarcaModelos });
-                this.Cursor = Cursors.Arrow;
-                this.lblStatus.Content = "";
-            }), feetchedMarcaModelos);
+                cbModelos.DisplayMemberPath = "DescricaoModelo";
+                cbModelos.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcaModelos });
+                Cursor = Cursors.Arrow;
+                lblStatus.Content = "";
+            }), fetchedMarcaModelos);
         }
 
-        private void CarregaVersoes(List<MarcaModeloVersao> feetchedVersoes)
+        private void CarregaVersoes(List<MarcaModeloVersao> fetchedVersoes)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbVersoes.DisplayMemberPath = "descricaoVersao";
-                this.cbVersoes.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = feetchedVersoes });
-                this.Cursor = Cursors.Arrow;
-                this.lblStatus.Content = "";
-            }), feetchedVersoes);
+                cbVersoes.DisplayMemberPath = "DescricaoVersao";
+                cbVersoes.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedVersoes });
+                Cursor = Cursors.Arrow;
+                lblStatus.Content = "";
+            }), fetchedVersoes);
         }
 
         private void ActualizaPreco(Viatura viatura)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.txtPreco.Text = viatura.precoNovo.ToString();
-                this.Cursor = Cursors.Arrow;
-                this.lblStatus.Content = "";
+                txtPreco.Text = viatura.PrecoNovo.ToString();
+                ActualizaStatusRato();
+                Cursor = Cursors.Arrow;
+                lblStatus.Content = "";
             }), viatura);
         }
 
-        private void Rb_Click(object sender, RoutedEventArgs e)
+        // Define a datasource a usar com base nos radiobuttons.
+        private void SetDataSource()
         {
+            if (rbExcel.IsChecked == true)
+            {
+                DataSource = DataSource.Excel;
+            }
+            else if (rbXml.IsChecked == true)
+            {
+                DataSource = DataSource.XML;
+            }
+            else
+            {
+                DataSource = DataSource.FireBase;
+            }
+        }
 
+        private void ActualizaStatusRato(string mensagemStatus = "")
+        {
+            lblStatus.Content = mensagemStatus;
+            if (mensagemStatus == "")
+            {
+                Cursor = Cursors.Arrow;
+            }
+            else
+            {
+                Cursor = Cursors.Wait;
+            }
         }
         #endregion
-
     }
 }

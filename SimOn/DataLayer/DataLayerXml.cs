@@ -15,48 +15,56 @@ namespace SimOn
         //var marcasUnicas = marcas.Distinct();
 
         //    return new List<Marca>();
-        #region Variable definition.
-        private static string ficheiroXml = "l201803C.xml";
+        #region Definicao de variaveis
+        private static readonly string ficheiroXml = "Dados/l201803C.xml";
         #endregion
 
-        internal static List<Marca> GetMarcasExcel()
+        #region Metodos internos
+        internal static List<Marca> GetMarcas()
         {
-            Func<Viatura, bool> perdicate = x => true;
+            //Func<Viatura, bool> perdicate = x => true;
+            bool perdicate(Viatura x) => true;
             List<Marca> marcas = GetViaturas(perdicate).Cast<Marca>().ToList();
             return marcas.Distinct().ToList();
         }
         internal static List<MarcaModelo> GetModelos(Marca marca)
         {
-            Func<Viatura, bool> perdicate = x => x.descricaoMarca == marca.descricaoMarca;
+            //Func<Viatura, bool> perdicate = x => x.DescricaoMarca == marca.DescricaoMarca;
+            bool perdicate(Viatura x) => x.DescricaoMarca == marca.DescricaoMarca;
             List<MarcaModelo> modelos = GetViaturas(perdicate).Cast<MarcaModelo>().ToList();
             return modelos.Distinct().ToList();
         }
         internal static List<MarcaModeloVersao> GetVersoes(MarcaModelo modelo)
         {
-            Func<Viatura, bool> perdicate = x => x.descricaoMarca == modelo.descricaoMarca &&
-                                                 x.descricaoModelo == modelo.descricaoModelo;
+            //Func<Viatura, bool> perdicate = x => x.DescricaoMarca == modelo.DescricaoMarca &&
+            //                                     x.DescricaoModelo == modelo.DescricaoModelo;
+            bool perdicate(Viatura x) => x.DescricaoMarca == modelo.DescricaoMarca &&
+                                                 x.DescricaoModelo == modelo.DescricaoModelo;
             List<MarcaModeloVersao> versoes = GetViaturas(perdicate).Cast<MarcaModeloVersao>().ToList();
             return versoes;
         }
         internal static Viatura GetViatura(MarcaModeloVersao versao)
         {
-            Func<Viatura, bool> perdicate = x => x.descricaoMarca == versao.descricaoMarca &&
-                                                 x.descricaoModelo == versao.descricaoModelo &&
-                                                 x.descricaoVersao == versao.descricaoVersao;
+            //Func<Viatura, bool> perdicate = x => x.DescricaoMarca == versao.DescricaoMarca &&
+            //                                     x.DescricaoModelo == versao.DescricaoModelo &&
+            //                                     x.DescricaoVersao == versao.DescricaoVersao;
+            bool perdicate(Viatura x) => x.DescricaoMarca == versao.DescricaoMarca &&
+                                                 x.DescricaoModelo == versao.DescricaoModelo &&
+                                                 x.DescricaoVersao == versao.DescricaoVersao;
             List<Viatura> viaturas = GetViaturas(perdicate);
             return viaturas.FirstOrDefault();
         }
-
         internal static List<Viatura> GetViaturas(Func<Viatura,bool> perdicate)
         {
             System.Xml.Linq.XElement eurotax = System.Xml.Linq.XElement.Load(ficheiroXml);
             List<Viatura> viaturas = eurotax.Elements("NewsItemRow").Select( x =>
-                                    new Viatura { descricaoMarca = (string)x.Element("MARCA"),
-                                                  descricaoModelo = (string)x.Element("MODELO"),
-                                                  descricaoVersao = (string)x.Element("VERSAO"),
-                                                  precoNovo = Convert.ToDouble((string)x.Element("PNOVO"))
+                                    new Viatura { DescricaoMarca = (string)x.Element("MARCA"),
+                                                  DescricaoModelo = (string)x.Element("MODELO"),
+                                                  DescricaoVersao = (string)x.Element("VERSAO"),
+                                                  PrecoNovo = Convert.ToDouble((string)x.Element("PNOVO"))
                                     }).Where(perdicate).ToList();
             return viaturas;
         }
+        #endregion
     }
 }

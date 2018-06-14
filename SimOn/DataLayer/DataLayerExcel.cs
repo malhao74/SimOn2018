@@ -7,15 +7,15 @@ using LinqToExcel;
 
 namespace SimOn
 {
-    public enum DataSource { Excel, XML, FireBase}
     public static class DataLayerExcel
     {
-        #region Definicao de variaveis
-        public static string folhaExcel = AppContext.BaseDirectory.ToString() + @"\L201803C.xls";
+        #region Declaracao de variaveis
+        public static string folhaExcel = AppContext.BaseDirectory.ToString() + @"Dados\L201803C.xls";
         public static string workSheet = "LIGEIROS";
         #endregion
 
-        internal static List<Marca> GetMarcasExcel()
+        #region Metodos internos
+        internal static List<Marca> GetMarcas()
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             //excel.AddMapping("precoNovo", "PNOVO");
@@ -29,13 +29,13 @@ namespace SimOn
             marcas = marcasUnicas.ToList();
             return marcas;
         }
-        internal static List<MarcaModelo> GetModelosExcel(Marca marca)
+        internal static List<MarcaModelo> GetModelos(Marca marca)
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             //excel.AddMapping("descricaoMarca", "MARCA");
             //excel.AddMapping("descricaoModelo", "MODELO");
             var modelosLinq = from c in excel.Worksheet<MarcaModelo>(workSheet)
-                              where c.descricaoMarca == marca.descricaoMarca.Trim()
+                              where c.DescricaoMarca == marca.DescricaoMarca.Trim()
                               select c;
 
 
@@ -47,13 +47,13 @@ namespace SimOn
             //viaturas..Aggregate(viatura => )
             return modelos;
         }
-        internal static List<MarcaModeloVersao> GetVersoesExcel(MarcaModelo modelo)
+        internal static List<MarcaModeloVersao> GetVersoes(MarcaModelo modelo)
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             //excel.AddMapping("descricaoMarca", "MARCA");
             //excel.AddMapping("descricaoModelo", "MODELO");
             var versoesLinq = from c in excel.Worksheet<MarcaModeloVersao>(workSheet)
-                              where c.descricaoMarca == modelo.descricaoMarca.Trim() && c.descricaoModelo == modelo.descricaoModelo.Trim()
+                              where c.DescricaoMarca == modelo.DescricaoMarca.Trim() && c.DescricaoModelo == modelo.DescricaoModelo.Trim()
                               select c;
 
 
@@ -65,13 +65,14 @@ namespace SimOn
             //viaturas..Aggregate(viatura => )
             return versoes;
         }
-        internal static Viatura GetViaturaExcel(MarcaModeloVersao versao)
+        internal static Viatura GetViatura(MarcaModeloVersao versao)
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             var viatura = from c in excel.Worksheet<Viatura>(workSheet)
-                          where c.descricaoMarca == versao.descricaoMarca.Trim() && c.descricaoModelo == versao.descricaoModelo.Trim() && c.descricaoVersao == versao.descricaoVersao.Trim()
+                          where c.DescricaoMarca == versao.DescricaoMarca.Trim() && c.DescricaoModelo == versao.DescricaoModelo.Trim() && c.DescricaoVersao == versao.DescricaoVersao.Trim()
                           select c;
             return viatura.FirstOrDefault();
         }
+        #endregion
     }
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+
 namespace SimOn
 {
     public class TextBoxCurrency : TextBox
@@ -12,52 +13,55 @@ namespace SimOn
         public TextBoxCurrency()
             : base()
         {
+            KeyDown += TextBoxCurrency_KeyDown;
             GotFocus += TextBoxCurrency_GotFocus;
             LostFocus += TextBoxCurrency_LostFocus;
-            KeyDown += TextBoxCurrency_KeyDown;
+            TextChanged += TextBoxCurrency_TextChanged;
         }
 
-        #region Metodos privados
-        // Apenas permitir o input de numeros ou uma virgula
-        private void TextBoxCurrency_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void TextBoxCurrency_TextChanged(object sender, TextChangedEventArgs e)
         {
-            System.Windows.Input.Key key = e.Key;
-            if (key == System.Windows.Input.Key.Enter)
-            {
-                // TODO: Quando carregarem no enter passar para tab.
-
-            }
-            if (key >= System.Windows.Input.Key.D0 && key <= System.Windows.Input.Key.D9 )
-            { return; }
-            if (key == System.Windows.Input.Key.OemComma)
-            {
-                if (Text.IndexOf(',') > -1)
-                { e.Handled = true; }
-                return;
-            }
-            if (key == System.Windows.Input.Key.Delete)
-            { return; }
-
-            e.Handled = true;
-            return;
+            TextBoxCurrency_LostFocus(sender, e);
         }
 
-        // Depois do campo ter sido editado volta a formatar em moeda.
+        public double GetValue()
+        {
+            string text = Text.Replace(" ", "").Replace("€", "").Replace(".", ""); //.Replace(",",".");
+            return Convert.ToDouble("0" + text);
+        }
+
+        #region Metodos Privados
         private void TextBoxCurrency_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            double valor = Convert.ToDouble("0"+Text);
+            double valor = GetValue(); // Convert.ToDouble("0" + Text);
             Text = valor.ToString("C");
         }
 
-        // Quando o campo começa a ser editado, passa para valor.
         private void TextBoxCurrency_GotFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (Text != "")
+            Text = GetValue().ToString(); // Text.Replace(" ","").Replace("€","");
+        }
+
+        private void TextBoxCurrency_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            Key key = e.Key;
+
+            if ((key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9))
             {
-                string cleanText = Text.Replace(" ", "").Replace("€", "");
-                double valor = Convert.ToDouble(cleanText);
-                Text = valor.ToString();
+                return;
             }
+
+            if (key == Key.OemComma && Text.Contains(",") == false)
+            {
+                return;
+            }
+
+            if (key == Key.Tab)
+            {
+                return;
+            }
+
+            e.Handled = true;
         }
         #endregion
     }

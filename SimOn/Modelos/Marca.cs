@@ -12,7 +12,7 @@ namespace SimOn
     internal class Marca : IEquatable<Marca>
     {
         [ExcelColumn("MARCA")]
-        public string descricaoMarca { get; set; }
+        public string DescricaoMarca { get; set; }
 
         public Marca() { }
 
@@ -26,7 +26,7 @@ namespace SimOn
             if (Object.ReferenceEquals(this, other)) return true;
 
             //Check whether the products' properties are equal. 
-            return descricaoMarca.Equals(other.descricaoMarca);
+            return DescricaoMarca.Equals(other.DescricaoMarca);
         }
 
         // If Equals() returns true for a pair of objects  
@@ -36,7 +36,7 @@ namespace SimOn
         {
 
             //Get hash code for the Name field if it is not null. 
-            int hashMarca = descricaoMarca == null ? 0 : descricaoMarca.GetHashCode();
+            int hashMarca = DescricaoMarca == null ? 0 : DescricaoMarca.GetHashCode();
 
 
             //Calculate the hash code for the product. 
