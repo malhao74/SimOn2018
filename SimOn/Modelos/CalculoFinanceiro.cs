@@ -11,9 +11,9 @@ namespace SimOn
     /// <summary>
     /// Class that implements financial calculations.
     /// </summary>
-    class CalculoFinanceiro
+    public class CalculoFinanceiro
     {
-        #region Variable definition.
+        #region Declaracao de variaveis
         private readonly Produto _produto;
         private readonly double _pvp;
         private readonly double _entradaInicial;
@@ -37,29 +37,29 @@ namespace SimOn
         public string ErrorMsg {  get { return _errorMsg; } }
         #endregion
 
-        #region Constructors.
+        #region Inits
         public CalculoFinanceiro() { }
 
         public CalculoFinanceiro(Produto produto, double pvp, double entradaInicial, double residual, int duracacao, double taxa)
         {
-            this._produto = produto;
-            this._pvp = pvp;
-            this._entradaInicial = entradaInicial;
-            this._residual = residual;
-            this._duracacao = duracacao;
-            this._taxa = taxa;
+            _produto = produto;
+            _pvp = pvp;
+            _entradaInicial = entradaInicial;
+            _residual = residual;
+            _duracacao = duracacao;
+            _taxa = taxa;
 
-            this._financiado = this._pvp - this._entradaInicial;
+            _financiado = _pvp - _entradaInicial;
 
-            this.CalculaMensalidade();
+            CalculaMensalidade();
         }
         #endregion
 
-        #region Private methods.
+        #region Metodos privados
         private void CalculaMensalidade()
         {
             DueDate dueDate = this.Produto == Produto.credito ? DueDate.EndOfPeriod : DueDate.BegOfPeriod;
-            this._mensalidade = Financial.Pmt(this.Taxa/100/12, this.Duracacao, -this.Financiado, this.Residual, dueDate);
+            _mensalidade = Math.Round(Financial.Pmt(Taxa/100/12, Duracacao, -Financiado, Residual, dueDate),2);
         }
         #endregion
     }
