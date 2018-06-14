@@ -88,7 +88,7 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
-                this.lblStatus.Content = "A procurar as versões disponiveis...";
+                lblStatus.Content = "A procurar as versões disponiveis...";
                 var taskFeetchedVersoes = Task.Run(() =>
                 {
                     MarcaModelo modelo = (MarcaModelo)e.AddedItems[0];
@@ -96,7 +96,7 @@ namespace SimOn
                     CarregaVersoes(versoes);
                 });
 
-                this.Cursor = Cursors.Wait;
+                Cursor = Cursors.Wait;
 
             }
         }
@@ -106,14 +106,14 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
-                this.lblStatus.Content = "A procurar pvp...";
+                lblStatus.Content = "A procurar pvp...";
                 var taskFeetchedViatura = Task.Run(() =>
                 {
                     MarcaModeloVersao versao = (MarcaModeloVersao)e.AddedItems[0];                    
                     Viatura viatura = DataLayer.GetViatura(DataSource, versao);
-                    this.ActualizaPreco(viatura);
+                    ActualizaPreco(viatura);
                 });
-                this.Cursor = Cursors.Wait;
+                Cursor = Cursors.Wait;
             }
         }
 
@@ -129,10 +129,10 @@ namespace SimOn
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbMarcas.DisplayMemberPath = "DescricaoMarca";
-                this.cbMarcas.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcas });
-                this.Cursor = Cursors.Arrow;
-                this.lblStatus.Content = "";
+                cbMarcas.DisplayMemberPath = "DescricaoMarca";
+                cbMarcas.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcas });
+                Cursor = Cursors.Arrow;
+                lblStatus.Content = "";
             }), fetchedMarcas);
         }
 
@@ -140,10 +140,10 @@ namespace SimOn
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbModelos.DisplayMemberPath = "DescricaoModelo";
-                this.cbModelos.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcaModelos });
-                this.Cursor = Cursors.Arrow;
-                this.lblStatus.Content = "";
+                cbModelos.DisplayMemberPath = "DescricaoModelo";
+                cbModelos.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcaModelos });
+                Cursor = Cursors.Arrow;
+                lblStatus.Content = "";
             }), fetchedMarcaModelos);
         }
 
@@ -151,10 +151,10 @@ namespace SimOn
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.cbVersoes.DisplayMemberPath = "DescricaoVersao";
-                this.cbVersoes.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedVersoes });
-                this.Cursor = Cursors.Arrow;
-                this.lblStatus.Content = "";
+                cbVersoes.DisplayMemberPath = "DescricaoVersao";
+                cbVersoes.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedVersoes });
+                Cursor = Cursors.Arrow;
+                lblStatus.Content = "";
             }), fetchedVersoes);
         }
 
@@ -162,9 +162,10 @@ namespace SimOn
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.txtPreco.Text = viatura.PrecoNovo.ToString();
-                this.Cursor = Cursors.Arrow;
-                this.lblStatus.Content = "";
+                txtPreco.Text = viatura.PrecoNovo.ToString();
+                ActualizaStatusRato();
+                Cursor = Cursors.Arrow;
+                lblStatus.Content = "";
             }), viatura);
         }
 
@@ -182,6 +183,19 @@ namespace SimOn
             else
             {
                 DataSource = DataSource.FireBase;
+            }
+        }
+
+        private void ActualizaStatusRato(string mensagemStatus = "")
+        {
+            lblStatus.Content = mensagemStatus;
+            if (mensagemStatus == "")
+            {
+                Cursor = Cursors.Arrow;
+            }
+            else
+            {
+                Cursor = Cursors.Wait;
             }
         }
         #endregion
