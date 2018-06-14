@@ -11,55 +11,55 @@ namespace SimOn
     /// <summary>
     /// Class that implements financial calculations.
     /// </summary>
-    class CalculoFinanceiro
+    public class CalculoFinanceiro
     {
-        #region Variable definition.
-        private Produto _produto;
-        private double _pvp;
-        private double _entradaInicial;
-        private double _residual;
-        private int _duracacao;
-        private double _taxa;
-        private double _financiado;
+        #region Declaracao de variaveis
+        private readonly Produto _produto;
+        private readonly double _pvp;
+        private readonly double _entradaInicial;
+        private readonly double _residual;
+        private readonly int _duracacao;
+        private readonly double _taxa;
+        private readonly double _financiado;
         private double _mensalidade;
 
-        private string _errorMsg = "";
+        private readonly string _errorMsg = "";
 
-        public Produto produto { get { return _produto; } }
-        public double pvp { get { return _pvp; } }
-        public double entradaInicial { get { return _entradaInicial; } }
-        public double residual {  get { return _residual; } }
-        public int duracacao { get { return _duracacao; } }
-        public double taxa {  get { return _taxa; } }
-        public double financiado {  get { return _financiado; } }
-        public double mensalidade {  get { return _mensalidade; } }
+        public Produto Produto { get { return _produto; } }
+        public double Pvp { get { return _pvp; } }
+        public double EntradaInicial { get { return _entradaInicial; } }
+        public double Residual {  get { return _residual; } }
+        public int Duracacao { get { return _duracacao; } }
+        public double Taxa {  get { return _taxa; } }
+        public double Financiado {  get { return _financiado; } }
+        public double Mensalidade {  get { return _mensalidade; } }
 
-        public string errorMsg {  get { return _errorMsg; } }
+        public string ErrorMsg {  get { return _errorMsg; } }
         #endregion
 
-        #region Constructors.
+        #region Inits
         public CalculoFinanceiro() { }
 
         public CalculoFinanceiro(Produto produto, double pvp, double entradaInicial, double residual, int duracacao, double taxa)
         {
-            this._produto = produto;
-            this._pvp = pvp;
-            this._entradaInicial = entradaInicial;
-            this._residual = residual;
-            this._duracacao = duracacao;
-            this._taxa = taxa;
+            _produto = produto;
+            _pvp = pvp;
+            _entradaInicial = entradaInicial;
+            _residual = residual;
+            _duracacao = duracacao;
+            _taxa = taxa;
 
-            this._financiado = this._pvp - this._entradaInicial;
+            _financiado = _pvp - _entradaInicial;
 
-            this.calculaMensalidade();
+            CalculaMensalidade();
         }
         #endregion
 
-        #region Private methods.
-        private void calculaMensalidade()
+        #region Metodos privados
+        private void CalculaMensalidade()
         {
-            DueDate dueDate = this.produto == Produto.credito ? DueDate.EndOfPeriod : DueDate.BegOfPeriod;
-            this._mensalidade = Financial.Pmt(this.taxa/100/12, this.duracacao, -this.financiado, this.residual, dueDate);
+            DueDate dueDate = this.Produto == Produto.credito ? DueDate.EndOfPeriod : DueDate.BegOfPeriod;
+            _mensalidade = Math.Round(Financial.Pmt(Taxa/100/12, Duracacao, -Financiado, Residual, dueDate),2);
         }
         #endregion
     }
