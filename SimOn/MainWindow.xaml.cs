@@ -24,7 +24,7 @@ namespace SimOn
         #region Variable definition.
         // Variable needed to update the UI from within the asynchronous task.
         private readonly SynchronizationContext synchronizationContext;
-        private DataSource dataSource { get {
+        private DataSource DataSource { get {
                 if (rbExcel.IsChecked == true)
                 { return DataSource.Excel; }
                 else if (rbXml.IsChecked == true)
@@ -42,7 +42,7 @@ namespace SimOn
 
         #region Events.
         // Button to calculate the instalment.
-        private void butCalcular_Click(object sender, RoutedEventArgs e)
+        private void ButCalcular_Click(object sender, RoutedEventArgs e)
         {
             double pvp = Convert.ToDouble(this.txtPreco.Text);
             double entradaInicial = Convert.ToDouble(this.txtEntradaInicial.Text);
@@ -65,13 +65,13 @@ namespace SimOn
             var taskFeetchedMarcas = Task.Run(() =>
             {
                 List<Marca> marcas = DataLayer.GetMarcas();
-                carregaMarcas(marcas);
+                CarregaMarcas(marcas);
             });
 
             this.Cursor = Cursors.Wait;
         }
 
-        private void cbMarcas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbMarcas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
             {
@@ -80,14 +80,14 @@ namespace SimOn
                 {
                     Marca marca = (Marca)e.AddedItems[0];
                     List<MarcaModelo> modelos = DataLayer.GetModelos(marca);
-                    carregaModelos(modelos);
+                    CarregaModelos(modelos);
                 });
 
                 this.Cursor = Cursors.Wait;
             }
         }
 
-        private void cbModelos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbModelos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
             {
@@ -96,7 +96,7 @@ namespace SimOn
                 {
                     MarcaModelo modelo = (MarcaModelo)e.AddedItems[0];
                     List<MarcaModeloVersao> versoes = DataLayer.GetVersoes(modelo);
-                    carregaVersoes(versoes);
+                    CarregaVersoes(versoes);
                 });
 
                 this.Cursor = Cursors.Wait;
@@ -104,7 +104,7 @@ namespace SimOn
             }
         }
 
-        private void cbVersoes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbVersoes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
             {
@@ -113,7 +113,7 @@ namespace SimOn
                 {
                     MarcaModeloVersao versao = (MarcaModeloVersao)e.AddedItems[0];
                     Viatura viatura = DataLayer.GetViatura(versao);
-                    this.actualizaPreco(viatura);
+                    this.ActualizaPreco(viatura);
                 });
                 this.Cursor = Cursors.Wait;
             }
@@ -121,7 +121,7 @@ namespace SimOn
         #endregion
 
         #region Private methods.
-        private void carregaMarcas(List<Marca> feetchedMarcas)
+        private void CarregaMarcas(List<Marca> feetchedMarcas)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
@@ -132,7 +132,7 @@ namespace SimOn
             }), feetchedMarcas);
         }
 
-        private void carregaModelos(List<MarcaModelo> feetchedMarcaModelos)
+        private void CarregaModelos(List<MarcaModelo> feetchedMarcaModelos)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
@@ -143,7 +143,7 @@ namespace SimOn
             }), feetchedMarcaModelos);
         }
 
-        private void carregaVersoes(List<MarcaModeloVersao> feetchedVersoes)
+        private void CarregaVersoes(List<MarcaModeloVersao> feetchedVersoes)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
@@ -154,7 +154,7 @@ namespace SimOn
             }), feetchedVersoes);
         }
 
-        private void actualizaPreco(Viatura viatura)
+        private void ActualizaPreco(Viatura viatura)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
