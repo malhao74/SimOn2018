@@ -28,13 +28,13 @@ namespace SimOn
         public Produto Produto { get { return _produto; } }
         public double Pvp { get { return _pvp; } }
         public double EntradaInicial { get { return _entradaInicial; } }
-        public double residual {  get { return _residual; } }
+        public double Residual {  get { return _residual; } }
         public int Duracacao { get { return _duracacao; } }
         public double Taxa {  get { return _taxa; } }
         public double Financiado {  get { return _financiado; } }
         public double Mensalidade {  get { return _mensalidade; } }
 
-        public string errorMsg {  get { return _errorMsg; } }
+        public string ErrorMsg {  get { return _errorMsg; } }
         #endregion
 
         #region Constructors.
@@ -51,15 +51,15 @@ namespace SimOn
 
             this._financiado = this._pvp - this._entradaInicial;
 
-            this.calculaMensalidade();
+            this.CalculaMensalidade();
         }
         #endregion
 
         #region Private methods.
-        private void calculaMensalidade()
+        private void CalculaMensalidade()
         {
             DueDate dueDate = this.Produto == Produto.credito ? DueDate.EndOfPeriod : DueDate.BegOfPeriod;
-            this._mensalidade = Financial.Pmt(this.Taxa/100/12, this.Duracacao, -this.Financiado, this.residual, dueDate);
+            this._mensalidade = Financial.Pmt(this.Taxa/100/12, this.Duracacao, -this.Financiado, this.Residual, dueDate);
         }
         #endregion
     }

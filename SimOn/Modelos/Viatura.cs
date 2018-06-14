@@ -15,7 +15,7 @@ namespace SimOn
     {
         #region Variables declaration
         [ExcelColumn("PNOVO")]
-        public double precoNovo { get; set; }
+        public double PrecoNovo { get; set; }
         #endregion
 
         #region Metodos publicos.

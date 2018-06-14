@@ -10,7 +10,7 @@ namespace SimOn
     internal class MarcaModeloVersao : MarcaModelo
     {
         [ExcelColumn("VERSAO")]
-        public string descricaoVersao { get; set; }
+        public string DescricaoVersao { get; set; }
 
         public MarcaModeloVersao() { }
 

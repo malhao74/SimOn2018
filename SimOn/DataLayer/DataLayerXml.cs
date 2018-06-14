@@ -16,7 +16,7 @@ namespace SimOn
 
         //    return new List<Marca>();
         #region Definicao de variaveis
-        private static string ficheiroXml = "Dados/l201803C.xml";
+        private static readonly string ficheiroXml = "Dados/l201803C.xml";
         #endregion
 
         internal static List<Marca> GetMarcasExcel()
@@ -27,22 +27,22 @@ namespace SimOn
         }
         internal static List<MarcaModelo> GetModelos(Marca marca)
         {
-            Func<Viatura, bool> perdicate = x => x.descricaoMarca == marca.descricaoMarca;
+            Func<Viatura, bool> perdicate = x => x.DescricaoMarca == marca.DescricaoMarca;
             List<MarcaModelo> modelos = GetViaturas(perdicate).Cast<MarcaModelo>().ToList();
             return modelos.Distinct().ToList();
         }
         internal static List<MarcaModeloVersao> GetVersoes(MarcaModelo modelo)
         {
-            Func<Viatura, bool> perdicate = x => x.descricaoMarca == modelo.descricaoMarca &&
-                                                 x.descricaoModelo == modelo.descricaoModelo;
+            Func<Viatura, bool> perdicate = x => x.DescricaoMarca == modelo.DescricaoMarca &&
+                                                 x.DescricaoModelo == modelo.DescricaoModelo;
             List<MarcaModeloVersao> versoes = GetViaturas(perdicate).Cast<MarcaModeloVersao>().ToList();
             return versoes;
         }
         internal static Viatura GetViatura(MarcaModeloVersao versao)
         {
-            Func<Viatura, bool> perdicate = x => x.descricaoMarca == versao.descricaoMarca &&
-                                                 x.descricaoModelo == versao.descricaoModelo &&
-                                                 x.descricaoVersao == versao.descricaoVersao;
+            Func<Viatura, bool> perdicate = x => x.DescricaoMarca == versao.DescricaoMarca &&
+                                                 x.DescricaoModelo == versao.DescricaoModelo &&
+                                                 x.DescricaoVersao == versao.DescricaoVersao;
             List<Viatura> viaturas = GetViaturas(perdicate);
             return viaturas.FirstOrDefault();
         }
@@ -51,10 +51,10 @@ namespace SimOn
         {
             System.Xml.Linq.XElement eurotax = System.Xml.Linq.XElement.Load(ficheiroXml);
             List<Viatura> viaturas = eurotax.Elements("NewsItemRow").Select( x =>
-                                    new Viatura { descricaoMarca = (string)x.Element("MARCA"),
-                                                  descricaoModelo = (string)x.Element("MODELO"),
-                                                  descricaoVersao = (string)x.Element("VERSAO"),
-                                                  precoNovo = Convert.ToDouble((string)x.Element("PNOVO"))
+                                    new Viatura { DescricaoMarca = (string)x.Element("MARCA"),
+                                                  DescricaoModelo = (string)x.Element("MODELO"),
+                                                  DescricaoVersao = (string)x.Element("VERSAO"),
+                                                  PrecoNovo = Convert.ToDouble((string)x.Element("PNOVO"))
                                     }).Where(perdicate).ToList();
             return viaturas;
         }

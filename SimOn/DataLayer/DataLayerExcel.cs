@@ -35,7 +35,7 @@ namespace SimOn
             //excel.AddMapping("descricaoMarca", "MARCA");
             //excel.AddMapping("descricaoModelo", "MODELO");
             var modelosLinq = from c in excel.Worksheet<MarcaModelo>(workSheet)
-                              where c.descricaoMarca == marca.descricaoMarca.Trim()
+                              where c.DescricaoMarca == marca.DescricaoMarca.Trim()
                               select c;
 
 
@@ -53,7 +53,7 @@ namespace SimOn
             //excel.AddMapping("descricaoMarca", "MARCA");
             //excel.AddMapping("descricaoModelo", "MODELO");
             var versoesLinq = from c in excel.Worksheet<MarcaModeloVersao>(workSheet)
-                              where c.descricaoMarca == modelo.descricaoMarca.Trim() && c.descricaoModelo == modelo.descricaoModelo.Trim()
+                              where c.DescricaoMarca == modelo.DescricaoMarca.Trim() && c.DescricaoModelo == modelo.DescricaoModelo.Trim()
                               select c;
 
 
@@ -69,7 +69,7 @@ namespace SimOn
         {
             var excel = new ExcelQueryFactory(folhaExcel);
             var viatura = from c in excel.Worksheet<Viatura>(workSheet)
-                          where c.descricaoMarca == versao.descricaoMarca.Trim() && c.descricaoModelo == versao.descricaoModelo.Trim() && c.descricaoVersao == versao.descricaoVersao.Trim()
+                          where c.DescricaoMarca == versao.DescricaoMarca.Trim() && c.DescricaoModelo == versao.DescricaoModelo.Trim() && c.DescricaoVersao == versao.DescricaoVersao.Trim()
                           select c;
             return viatura.FirstOrDefault();
         }

@@ -10,9 +10,7 @@ namespace SimOn
         public HttpResponseMessage HttpResponse;
 
         public FirebaseResponse()
-        {
-
-        }
+        { }
 
         public FirebaseResponse(bool success, string errorMessage, HttpResponseMessage httpResponse = null, string jsonContent = null)
         {

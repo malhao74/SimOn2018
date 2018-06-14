@@ -12,9 +12,8 @@ namespace SimOn
 
         public static bool ValidadeURI(string url)
         {
-            Uri locUrl;
 
-            if (System.Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out locUrl) == false)
+            if (System.Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri locUrl) == false)
             { return false; }
             if (!(locUrl.IsAbsoluteUri && (locUrl.Scheme == "http"|| locUrl.Scheme == "https")) || !locUrl.IsAbsoluteUri)
             { return false; }

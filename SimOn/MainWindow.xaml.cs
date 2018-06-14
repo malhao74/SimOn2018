@@ -21,7 +21,7 @@ namespace SimOn
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Variable definition.
+        #region Declaracao de variaveis
         // Variable needed to update the UI from within the asynchronous task.
         private readonly SynchronizationContext synchronizationContext;
         private DataSource DataSource { get {
@@ -40,7 +40,7 @@ namespace SimOn
             synchronizationContext = SynchronizationContext.Current;           
         }
 
-        #region Events.
+        #region Eventos
         // Button to calculate the instalment.
         private void ButCalcular_Click(object sender, RoutedEventArgs e)
         {
@@ -120,7 +120,7 @@ namespace SimOn
         }
         #endregion
 
-        #region Private methods.
+        #region Metodos privados
         private void CarregaMarcas(List<Marca> feetchedMarcas)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
@@ -158,7 +158,7 @@ namespace SimOn
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                this.txtPreco.Text = viatura.precoNovo.ToString();
+                this.txtPreco.Text = viatura.PrecoNovo.ToString();
                 this.Cursor = Cursors.Arrow;
                 this.lblStatus.Content = "";
             }), viatura);
