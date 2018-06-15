@@ -11,6 +11,9 @@ namespace SimOn
     {
         [ExcelColumn("VERSAO")]
         public string DescricaoVersao { get; set; }
+        //Para uso com firebase
+        public int IdVersao { get; set; }
+        public int Modelo { get; set; }
 
         public MarcaModeloVersao() { }
 

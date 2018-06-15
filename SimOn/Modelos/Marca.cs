@@ -13,6 +13,8 @@ namespace SimOn
     {
         [ExcelColumn("MARCA")]
         public string DescricaoMarca { get; set; }
+        //Para uso com firebase
+        public int IdMarca { get; set; }
 
         public Marca() { }
 
