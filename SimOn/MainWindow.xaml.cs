@@ -52,18 +52,11 @@ namespace SimOn
             txtMensalidade.Text = calculo.Mensalidade.ToString("C");
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void WindowSimOn_Loaded(object sender, RoutedEventArgs e)
         {
             SetDataSource();
 
-            lblStatus.Content = "A procurar as marcas disponiveis...";
-            var taskFeetchedMarcas = Task.Run(() =>
-            {
-                List<Marca> marcas = DataLayer.GetMarcas(DataSource);
-                CarregaMarcas(marcas);
-            });
-
-            Cursor = Cursors.Wait;
+            BuscarPreencheMarcas();
         }
 
         // Escolheu uma marca, vai buscar os modelos associados à marca.
@@ -120,7 +113,10 @@ namespace SimOn
         // Quando um dos radiobuttons da datasource e carregado, define a datasource a usar.
         private void Rb_Checked(object sender, RoutedEventArgs e)
         {
+            ClearScreen();
+
             SetDataSource();
+            BuscarPreencheMarcas();
         }
         #endregion
 
@@ -188,7 +184,10 @@ namespace SimOn
 
         private void ActualizaStatusRato(string mensagemStatus = "")
         {
-            lblStatus.Content = mensagemStatus;
+            if (lblStatus != null)
+            {
+                lblStatus.Content = mensagemStatus;
+            }
             if (mensagemStatus == "")
             {
                 Cursor = Cursors.Arrow;
@@ -197,6 +196,29 @@ namespace SimOn
             {
                 Cursor = Cursors.Wait;
             }
+        }
+
+        private void BuscarPreencheMarcas()
+        {
+            ActualizaStatusRato("A procurar as marcas disponiveis...");
+            var taskFetchedMarcas = Task.Run(() =>
+            {
+                List<Marca> marcas = DataLayer.GetMarcas(DataSource);
+                CarregaMarcas(marcas);
+            });
+        }
+
+        private void ClearScreen()
+        {
+            cbMarcas.ItemsSource = null;
+            cbModelos.ItemsSource = null;
+            cbVersoes.ItemsSource = null;
+            txtPreco.Text = "";
+            txtDuracao.Text = "";
+            txtEntradaInicial.Text = "";
+            txtMensalidade.Text = "";
+            txtResidual.Text = "";
+            txtTaxa.Text = "";
         }
         #endregion
     }

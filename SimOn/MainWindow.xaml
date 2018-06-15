@@ -1,11 +1,11 @@
-﻿<Window x:Name="txtStatus" x:Class="SimOn.MainWindow"
+﻿<Window x:Name="WindowSimOn" x:Class="SimOn.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimOn"
         mc:Ignorable="d"
-        Title="SimOn" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="SimOn" Height="450" Width="800" Loaded="WindowSimOn_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -31,7 +31,7 @@
         <TextBox x:Name="txtTaxa" HorizontalAlignment="Left" Margin="400,209,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
 
         <Label x:Name="lblMensalidade" Content="Mensalidade" HorizontalAlignment="Left" Margin="545,78,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.921,0.193"/>
-        <TextBox x:Name="txtMensalidade" HorizontalAlignment="Left" Margin="649,78,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120"/>
+        <TextBox x:Name="txtMensalidade" HorizontalAlignment="Left" Margin="649,78,0,0" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Top" Height="21" Width="120" IsEnabled="False"/>
         <GroupBox x:Name="gpFonte" Header="Escolha a fonte da informação" HorizontalAlignment="Left" Margin="545,122,0,0" VerticalAlignment="Top" Height="110" Width="225">
             <Grid >
                 <RadioButton x:Name="rbExcel" Content="Excel" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Checked="Rb_Checked"/>

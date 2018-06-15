@@ -177,7 +177,6 @@
     <Compile Include="DataLayer\DataLayerFireBase.cs" />
     <Compile Include="DataLayer\DataLayerXml.cs" />
     <Compile Include="DataLayer\FirebaseDB.cs" />
-    <Compile Include="DataLayer\FirebaseLayer.cs" />
     <Compile Include="DataLayer\FirebaseRequest.cs" />
     <Compile Include="DataLayer\FirebaseResponse.cs" />
     <Compile Include="Modelos\Marca.cs" />

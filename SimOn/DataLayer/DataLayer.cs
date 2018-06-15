@@ -23,14 +23,14 @@ namespace SimOn
                 case DataSource.XML:
                     return DataLayerXml.GetMarcas();
                 case DataSource.FireBase:
-                    return null;
+                    return DataLayerFireBase.GetMarcas(); ;
                 default:
                     return null;
             }
         }
 
 
-        public static List<MarcaModelo> GetModelos (DataSource dataSource, Marca marca)
+        public static List<MarcaModelo> GetModelos(DataSource dataSource, Marca marca)
         {
             switch (dataSource)
             {
@@ -39,7 +39,7 @@ namespace SimOn
                 case DataSource.XML:
                     return DataLayerXml.GetModelos(marca);
                 case DataSource.FireBase:
-                    return null;
+                    return DataLayerFireBase.GetModelos(marca);
                 default:
                     return null;
             }
@@ -55,7 +55,7 @@ namespace SimOn
                 case DataSource.XML:
                     return DataLayerXml.GetVersoes(modelo);
                 case DataSource.FireBase:
-                    return null;
+                    return DataLayerFireBase.GetVersoes(modelo);
                 default:
                     return null;
             }
@@ -71,7 +71,7 @@ namespace SimOn
                 case DataSource.XML:
                     return DataLayerXml.GetViatura(versao);
                 case DataSource.FireBase:
-                    return null;
+                    return DataLayerFireBase.GetViatura(versao);
                 default:
                     return null;
             }
