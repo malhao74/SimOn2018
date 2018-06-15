@@ -25,7 +25,8 @@ namespace SimOn
             //Func<Viatura, bool> perdicate = x => true;
             bool perdicate(Viatura x) => true;
             List<Marca> marcas = GetViaturas(perdicate).Cast<Marca>().ToList();
-            return marcas.Distinct().ToList();
+            List<Marca> marcasUnicas = marcas.Distinct().ToList();
+            return marcasUnicas;
         }
         internal static List<MarcaModelo> GetModelos(Marca marca)
         {

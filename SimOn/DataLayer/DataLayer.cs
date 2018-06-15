@@ -30,7 +30,7 @@ namespace SimOn
         }
 
 
-        public static List<MarcaModelo> GetModelos (DataSource dataSource, Marca marca)
+        public static List<MarcaModelo> GetModelos(DataSource dataSource, Marca marca)
         {
             switch (dataSource)
             {
