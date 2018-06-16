@@ -16,13 +16,10 @@ using System.Windows.Shapes;
 
 namespace SimOn
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         #region Declaracao de variaveis
-        // Variable needed to update the UI from within the asynchronous task.
+        // Variavel necessaria para actualizar UI dentro de uma tarefa assincrona
         private readonly SynchronizationContext synchronizationContext;
         private DataSource DataSource { get; set; }
         #endregion
@@ -54,6 +51,8 @@ namespace SimOn
 
         private void WindowSimOn_Loaded(object sender, RoutedEventArgs e)
         {
+            rbXml.IsChecked = true;
+
             SetDataSource();
 
             BuscarPreencheMarcas();
@@ -64,15 +63,13 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
-                lblStatus.Content = "A procurar os modelos disponiveis...";
+                ActualizaStatusRato("A procurar os modelos disponiveis...");
                 var taskFeetchedMarcasModelos = Task.Run(() =>
                 {
                     Marca marca = (Marca)e.AddedItems[0];
                     List<MarcaModelo> modelos = DataLayer.GetModelos(DataSource, marca);
                     CarregaModelos(modelos);
                 });
-
-                Cursor = Cursors.Wait;
             }
         }
 
@@ -81,16 +78,13 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
-                lblStatus.Content = "A procurar as versões disponiveis...";
+                ActualizaStatusRato("A procurar as versões disponiveis...");
                 var taskFeetchedVersoes = Task.Run(() =>
                 {
                     MarcaModelo modelo = (MarcaModelo)e.AddedItems[0];
                     List<MarcaModeloVersao> versoes = DataLayer.GetVersoes(DataSource, modelo);
                     CarregaVersoes(versoes);
                 });
-
-                Cursor = Cursors.Wait;
-
             }
         }
 
@@ -99,14 +93,13 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
-                lblStatus.Content = "A procurar pvp...";
+                ActualizaStatusRato("A procurar pvp...");
                 var taskFeetchedViatura = Task.Run(() =>
                 {
                     MarcaModeloVersao versao = (MarcaModeloVersao)e.AddedItems[0];                    
                     Viatura viatura = DataLayer.GetViatura(DataSource, versao);
                     ActualizaPreco(viatura);
                 });
-                Cursor = Cursors.Wait;
             }
         }
 
@@ -127,8 +120,7 @@ namespace SimOn
             {
                 cbMarcas.DisplayMemberPath = "DescricaoMarca";
                 cbMarcas.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcas });
-                Cursor = Cursors.Arrow;
-                lblStatus.Content = "";
+                ActualizaStatusRato();
             }), fetchedMarcas);
         }
 
@@ -138,8 +130,7 @@ namespace SimOn
             {
                 cbModelos.DisplayMemberPath = "DescricaoModelo";
                 cbModelos.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcaModelos });
-                Cursor = Cursors.Arrow;
-                lblStatus.Content = "";
+                ActualizaStatusRato();
             }), fetchedMarcaModelos);
         }
 
@@ -149,8 +140,7 @@ namespace SimOn
             {
                 cbVersoes.DisplayMemberPath = "DescricaoVersao";
                 cbVersoes.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedVersoes });
-                Cursor = Cursors.Arrow;
-                lblStatus.Content = "";
+                ActualizaStatusRato();
             }), fetchedVersoes);
         }
 
@@ -160,8 +150,6 @@ namespace SimOn
             {
                 txtPreco.Text = viatura.PrecoNovo.ToString();
                 ActualizaStatusRato();
-                Cursor = Cursors.Arrow;
-                lblStatus.Content = "";
             }), viatura);
         }
 
@@ -184,6 +172,7 @@ namespace SimOn
 
         private void ActualizaStatusRato(string mensagemStatus = "")
         {
+            // Este evento é disparado no load do form e nessa altura a lblStatus ainda não existe.
             if (lblStatus != null)
             {
                 lblStatus.Content = mensagemStatus;

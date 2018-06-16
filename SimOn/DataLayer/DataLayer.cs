@@ -9,7 +9,7 @@ namespace SimOn
     public enum DataSource { Excel, XML, FireBase }
 
     /// <summary>
-    /// Provides a layer between the bussiness logic and data location/interface.
+    /// Disponibiliza um layer entre o interface do utlizador e os dados
     /// </summary>
     class DataLayer
     {
@@ -29,7 +29,6 @@ namespace SimOn
             }
         }
 
-
         public static List<MarcaModelo> GetModelos(DataSource dataSource, Marca marca)
         {
             switch (dataSource)
@@ -45,7 +44,6 @@ namespace SimOn
             }
         }
 
-
         public static List<MarcaModeloVersao> GetVersoes(DataSource dataSource, MarcaModelo modelo)
         {
             switch (dataSource)
@@ -60,7 +58,6 @@ namespace SimOn
                     return null;
             }
         }
-
 
         public static Viatura GetViatura(DataSource dataSource, MarcaModeloVersao versao)
         {
