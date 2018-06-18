@@ -28,7 +28,7 @@ namespace SimOn
             if (Object.ReferenceEquals(this, other)) return true;
 
             //Check whether the products' properties are equal. 
-            return DescricaoMarca.Equals(other.DescricaoMarca) && IdMarca.Equals(other.IdMarca);
+            return DescricaoMarca.Equals(other.DescricaoMarca); //&& IdMarca.Equals(other.IdMarca);
         }
 
         // If Equals() returns true for a pair of objects  
@@ -40,10 +40,10 @@ namespace SimOn
             //Get hash code for the Name field if it is not null. 
             int hashMarca = DescricaoMarca == null ? 0 : DescricaoMarca.GetHashCode();
 
-            int hashIdMarca = IdMarca.GetHashCode();
+            //int hashIdMarca = IdMarca.GetHashCode();
 
             //Calculate the hash code for the product. 
-            return hashMarca ^ hashIdMarca;
+            return hashMarca; //^ hashIdMarca;
         }
     }
 }

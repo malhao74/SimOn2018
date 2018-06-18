@@ -35,7 +35,7 @@
         <GroupBox x:Name="gpFonte" Header="Escolha a fonte da informação" HorizontalAlignment="Left" Margin="545,122,0,0" VerticalAlignment="Top" Height="110" Width="225">
             <Grid >
                 <RadioButton x:Name="rbExcel" Content="Excel" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Checked="Rb_Checked"/>
-                <RadioButton x:Name="rbXml" Content="XML" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Checked="Rb_Checked"/>
+                <RadioButton x:Name="rbXml" Content="XML" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Checked="Rb_Checked" IsChecked="True"/>
                 <RadioButton x:Name="rbFireBase" Content="FireBase" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Checked="Rb_Checked"/>
             </Grid>
         </GroupBox>

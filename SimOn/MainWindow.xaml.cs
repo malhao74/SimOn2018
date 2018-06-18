@@ -51,11 +51,12 @@ namespace SimOn
 
         private void WindowSimOn_Loaded(object sender, RoutedEventArgs e)
         {
-            rbXml.IsChecked = true;
+            //rbXml.IsChecked = true;
 
-            SetDataSource();
 
-            BuscarPreencheMarcas();
+            //SetDataSource();
+            //List<Marca> marcas = DataLayerXml.GetMarcas();
+            //BuscarPreencheMarcas();
         }
 
         // Escolheu uma marca, vai buscar os modelos associados à marca.
@@ -202,6 +203,10 @@ namespace SimOn
             cbMarcas.ItemsSource = null;
             cbModelos.ItemsSource = null;
             cbVersoes.ItemsSource = null;
+            cbMarcas.Items.Clear();
+            cbModelos.Items.Clear();
+            cbVersoes.Items.Clear();
+
             txtPreco.Text = "";
             txtDuracao.Text = "";
             txtEntradaInicial.Text = "";

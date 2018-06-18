@@ -15,15 +15,17 @@ namespace SimOn
         #region Metodos internos
         internal static List<Marca> GetMarcas()
         {
-            bool perdicate(Viatura x) => true;
-            List<Marca> marcas = new List<Marca>(GetViaturas(perdicate).Cast<Marca>());
-            return marcas.Distinct().ToList(); ;
+            bool perdicate(Marca x) => true;
+            List<Marca> marcas = new List<Marca>(GetViaturas(perdicate));
+            var marcasDistincts = marcas.Distinct(new DataExtractorElementComparer());
+            List<Marca> marcasRetorno = marcasDistincts.ToList();
+            return marcasRetorno; 
         }
 
         internal static List<MarcaModelo> GetModelos(Marca marca)
         {
             bool perdicate(Viatura x) => x.DescricaoMarca == marca.DescricaoMarca;
-            List<MarcaModelo> modelos = new List<MarcaModelo>(GetViaturas(perdicate).Cast<MarcaModelo>());
+            List<MarcaModelo> modelos = new List<MarcaModelo>(GetViaturas(perdicate));
             return modelos.Distinct().ToList();
         }
 
@@ -56,5 +58,18 @@ namespace SimOn
             return viaturas;
         }
         #endregion
+    }
+    class DataExtractorElementComparer : IEqualityComparer<Marca>
+    {
+
+        public bool Equals(Marca x, Marca y)
+        {
+            return x.DescricaoMarca == y.DescricaoMarca;
+        }
+
+        public int GetHashCode(Marca obj)
+        {
+            return obj.DescricaoMarca.GetHashCode();
+        }
     }
 }
