@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,6 +53,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>car-fill-from-frontal-view.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>SimOn.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Firebase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -172,19 +179,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Modelos\CalculoFinanceiro.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Modelos\FinancialCalculation.cs" />
     <Compile Include="DataLayer\DataLayerExcel.cs" />
     <Compile Include="DataLayer\DataLayerFireBase.cs" />
     <Compile Include="DataLayer\DataLayerXml.cs" />
     <Compile Include="DataLayer\FirebaseDB.cs" />
     <Compile Include="DataLayer\FirebaseRequest.cs" />
     <Compile Include="DataLayer\FirebaseResponse.cs" />
-    <Compile Include="Modelos\Marca.cs" />
-    <Compile Include="Modelos\MarcaModelo.cs" />
-    <Compile Include="Modelos\MarcaModeloVersao.cs" />
+    <Compile Include="Modelos\Brand.cs" />
+    <Compile Include="Modelos\Model.cs" />
+    <Compile Include="Modelos\Version.cs" />
     <Compile Include="TextBoxCurrency.cs" />
-    <Compile Include="UtilityHelper.cs" />
-    <Compile Include="Modelos\Viatura.cs" />
+    <Compile Include="DataLayer\FireBaseRequestHelper.cs" />
+    <Compile Include="Modelos\Car.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -213,6 +221,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SimOn.snk" />
     <Resource Include="car-fill-from-frontal-view.ico" />
     <Content Include="Dados\l201803C.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

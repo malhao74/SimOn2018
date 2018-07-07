@@ -8,14 +8,14 @@ using Newtonsoft.Json;
 
 namespace SimOn
 {
+    /// <summary>
+    /// Fetch vehicle information from a firebase database
+    /// </summary>
     class DataLayerFireBase
     {
-        #region Definicao de variaveis
-        private static readonly string firebaseLink = "https://simon-4288d.firebaseio.com";
-        #endregion
+        private const string firebaseLink = "https://simon-4288d.firebaseio.com";
 
-        #region Metodos internos
-        internal static List<Marca> GetMarcas()
+        internal static List<Brand> FetchBrands()
         {
 
             FirebaseResponse getResponse = GetResponse("Marcas");
@@ -27,12 +27,13 @@ namespace SimOn
 
             string resposta = getResponse.JSONContent;
 
-            List<Marca> marcas = JsonConvert.DeserializeObject<List<Marca>>(resposta);
+            List<Brand> marcas = JsonConvert.DeserializeObject<List<Brand>>(resposta);
             marcas.Remove(null);
 
             return marcas.ToList();
         }
-        internal static List<MarcaModelo> GetModelos(Marca marca)
+
+        internal static List<Model> FetchModels(Brand marca)
         {
             FirebaseResponse getResponse = GetResponse("Modelos");
             Console.WriteLine(getResponse.Success);
@@ -43,13 +44,14 @@ namespace SimOn
 
             string resposta = getResponse.JSONContent;
 
-            List<MarcaModelo> todosModelos = JsonConvert.DeserializeObject<List<MarcaModelo>>(resposta);
+            List<Model> todosModelos = JsonConvert.DeserializeObject<List<Model>>(resposta);
             todosModelos.Remove(null);
 
-            List<MarcaModelo> modelosMarca = todosModelos.Where(x => x.Marca == marca.IdMarca).ToList();
+            List<Model> modelosMarca = todosModelos.Where(x => x.Brand == marca.BrandId).ToList();
             return modelosMarca.ToList();
         }
-        internal static List<MarcaModeloVersao> GetVersoes(MarcaModelo modelo)
+
+        internal static List<Version> FetchVersions(Model modelo)
         {
             FirebaseResponse getResponse = GetResponse("Versoes");
             Console.WriteLine(getResponse.Success);
@@ -60,13 +62,14 @@ namespace SimOn
 
             string resposta = getResponse.JSONContent;
 
-            List<MarcaModeloVersao> todasVersoes = JsonConvert.DeserializeObject<List<MarcaModeloVersao>>(resposta);
+            List<Version> todasVersoes = JsonConvert.DeserializeObject<List<Version>>(resposta);
             todasVersoes.Remove(null);
 
-            List<MarcaModeloVersao> versoesModelos = todasVersoes.Where(x => x.Modelo == modelo.IdModelo).ToList();
+            List<Version> versoesModelos = todasVersoes.Where(x => x.Model == modelo.ModelId).ToList();
             return versoesModelos.ToList();
         }
-        internal static Viatura GetViatura(MarcaModeloVersao versao)
+
+        internal static Car FetchCar(Version versao)
         {
             FirebaseResponse getResponse = GetResponse("Versoes");
             Console.WriteLine(getResponse.Success);
@@ -77,12 +80,13 @@ namespace SimOn
 
             string resposta = getResponse.JSONContent;
 
-            List<Viatura> viaturas = JsonConvert.DeserializeObject<List<Viatura>>(resposta);
+            List<Car> viaturas = JsonConvert.DeserializeObject<List<Car>>(resposta);
             viaturas.Remove(null);
 
-            Viatura viatura = viaturas.Where(x => x.IdVersao == versao.IdVersao).ToList().FirstOrDefault();
+            Car viatura = viaturas.Where(x => x.VersionId == versao.VersionId).ToList().FirstOrDefault();
             return viatura;
         }
+
         internal static FirebaseResponse GetResponse(string node)
         {
             FirebaseDB firebaseDB = new FirebaseDB(firebaseLink);
@@ -91,7 +95,5 @@ namespace SimOn
 
             return getResponse;
         }
-        #endregion
-
     }
 }

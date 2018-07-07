@@ -3,12 +3,13 @@ using System.Net.Http;
 
 namespace SimOn
 {
-    class FirebaseDB
+    /// <summary>
+    /// Class to work with FireBase database
+    /// </summary>
+    internal class FirebaseDB
     {
         private readonly string rootNode;
 
-
-        #region Metodos publicos
         public FirebaseDB(string baseUrl)
         { this.rootNode = baseUrl; }
 
@@ -16,7 +17,7 @@ namespace SimOn
         {
             if (node.Contains("/"))
             {
-                throw new FormatException("Node must not contain '/', use NodePath insted.");
+                throw new FormatException("Node must not contain '/', use NodePath method instead.");
             }
             return new FirebaseDB(this.rootNode + '/' + node);
         }
@@ -49,6 +50,5 @@ namespace SimOn
         {
             return this.rootNode;
         }
-        #endregion
     }
 }

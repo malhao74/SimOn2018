@@ -9,17 +9,15 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Globalization;
 
+[assembly: CLSCompliant(true)]
 namespace SimOn
 {
     public partial class MainWindow : Window
     {
-        #region Declaracao de variaveis
-        // Variavel necessaria para actualizar UI dentro de uma tarefa assincrona
+        #region Fields & properties
+        // File necessary to update the UI within a asynchronous task
         private readonly SynchronizationContext synchronizationContext;
         private DataSource DataSource { get; set; }
         #endregion
@@ -30,46 +28,40 @@ namespace SimOn
             synchronizationContext = SynchronizationContext.Current;
         }
 
-        #region Eventos
-        // Click do calculo da prestacao
+        #region Events
         private void ButCalcular_Click(object sender, RoutedEventArgs e)
         {
-            double pvp = txtPreco.GetValue();
-            double entradaInicial = txtEntradaInicial.GetValue();
-            int duracao = Convert.ToInt32(this.txtDuracao.Text);
-            double taxa = Convert.ToDouble(this.txtTaxa.Text);
-            double residual = txtResidual.GetValue();
+            double vehiclePrice = txtPreco.ToDouble();
+            double downPayment = txtEntradaInicial.ToDouble();
+            int numberMonths = Convert.ToInt32(this.txtDuracao.Text, CultureInfo.CurrentCulture);
+            double rate = Convert.ToDouble(this.txtTaxa.Text, CultureInfo.CurrentCulture);
+            double residual = txtResidual.ToDouble();
 
-            CalculoFinanceiro calculo = new CalculoFinanceiro(Produto.credito,
-                                                                pvp,
-                                                                entradaInicial,
+            FinancialCalculation calculation = new FinancialCalculation(FinancialProduct.Credit,
+                                                                vehiclePrice,
+                                                                downPayment,
                                                                 residual,
-                                                                duracao,
-                                                                taxa);
-            txtMensalidade.Text = calculo.Mensalidade.ToString("C");
+                                                                numberMonths,
+                                                                rate);
+            txtMensalidade.FromDouble(calculation.MonthlyPayment);
         }
 
-        private void WindowSimOn_Loaded(object sender, RoutedEventArgs e)
-        {
-            //rbXml.IsChecked = true;
-
-
-            //SetDataSource();
-            //List<Marca> marcas = DataLayerXml.GetMarcas();
-            //BuscarPreencheMarcas();
-        }
-
-        // Escolheu uma marca, vai buscar os modelos associados à marca.
+        /// <summary>
+        /// When a user chooses a brand, it fetches the models associated with that specific brand
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CbMarcas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
             {
-                ActualizaStatusRato("A procurar os modelos disponiveis...");
-                var taskFeetchedMarcasModelos = Task.Run(() =>
+                UpdateStatus("A procurar os modelos disponiveis...");
+                
+                Task.Run(() =>
                 {
-                    Marca marca = (Marca)e.AddedItems[0];
-                    List<MarcaModelo> modelos = DataLayer.GetModelos(DataSource, marca);
-                    CarregaModelos(modelos);
+                    Brand marca = (Brand)e.AddedItems[0];
+                    List<Model> modelos = DataLayer.FetchModels(DataSource, marca);
+                    UpdateCbModels(modelos);
                 });
             }
         }
@@ -79,12 +71,13 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
-                ActualizaStatusRato("A procurar as versões disponiveis...");
-                var taskFeetchedVersoes = Task.Run(() =>
+                UpdateStatus("A procurar as versões disponiveis...");
+
+                Task.Run(() =>
                 {
-                    MarcaModelo modelo = (MarcaModelo)e.AddedItems[0];
-                    List<MarcaModeloVersao> versoes = DataLayer.GetVersoes(DataSource, modelo);
-                    CarregaVersoes(versoes);
+                    Model modelo = (Model)e.AddedItems[0];
+                    List<Version> versoes = DataLayer.FetchVersions(DataSource, modelo);
+                    UpdateCbVersions(versoes);
                 });
             }
         }
@@ -94,12 +87,13 @@ namespace SimOn
         {
             if (e.AddedItems.Count == 1)
             {
-                ActualizaStatusRato("A procurar pvp...");
-                var taskFeetchedViatura = Task.Run(() =>
+                UpdateStatus("A procurar pvp...");
+
+                Task.Run(() =>
                 {
-                    MarcaModeloVersao versao = (MarcaModeloVersao)e.AddedItems[0];                    
-                    Viatura viatura = DataLayer.GetViatura(DataSource, versao);
-                    ActualizaPreco(viatura);
+                    Version versao = (Version)e.AddedItems[0];                    
+                    Car viatura = DataLayer.FetchCar(DataSource, versao);
+                    UpdatePrice(viatura);
                 });
             }
         }
@@ -110,48 +104,48 @@ namespace SimOn
             ClearScreen();
 
             SetDataSource();
-            BuscarPreencheMarcas();
+            FetchUpdateBrands();
         }
         #endregion
 
-        #region Metodos privados
-        private void CarregaMarcas(List<Marca> fetchedMarcas)
+        #region Private methods
+        private void UpdateCbBrands(List<Brand> fechedBrands)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                cbMarcas.DisplayMemberPath = "DescricaoMarca";
-                cbMarcas.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcas });
-                ActualizaStatusRato();
-            }), fetchedMarcas);
+                cbMarcas.DisplayMemberPath = "BrandDescription";
+                cbMarcas.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fechedBrands });
+                UpdateStatus();
+            }), fechedBrands);
         }
 
-        private void CarregaModelos(List<MarcaModelo> fetchedMarcaModelos)
+        private void UpdateCbModels(List<Model> fetchedModels)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                cbModelos.DisplayMemberPath = "DescricaoModelo";
-                cbModelos.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedMarcaModelos });
-                ActualizaStatusRato();
-            }), fetchedMarcaModelos);
+                cbModelos.DisplayMemberPath = "ModelDescription";
+                cbModelos.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedModels });
+                UpdateStatus();
+            }), fetchedModels);
         }
 
-        private void CarregaVersoes(List<MarcaModeloVersao> fetchedVersoes)
+        private void UpdateCbVersions(List<Version> fetchedVersions)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                cbVersoes.DisplayMemberPath = "DescricaoVersao";
-                cbVersoes.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedVersoes });
-                ActualizaStatusRato();
-            }), fetchedVersoes);
+                cbVersoes.DisplayMemberPath = "VersionDescription";
+                cbVersoes.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = fetchedVersions });
+                UpdateStatus();
+            }), fetchedVersions);
         }
 
-        private void ActualizaPreco(Viatura viatura)
+        private void UpdatePrice(Car car)
         {
             synchronizationContext.Post(new SendOrPostCallback(o =>
             {
-                txtPreco.Text = viatura.PrecoNovo.ToString();
-                ActualizaStatusRato();
-            }), viatura);
+                txtPreco.FromDouble(car.Price);
+                UpdateStatus();
+            }), car);
         }
 
         // Define a datasource a usar com base nos radiobuttons.
@@ -163,7 +157,7 @@ namespace SimOn
             }
             else if (rbXml.IsChecked == true)
             {
-                DataSource = DataSource.XML;
+                DataSource = DataSource.Xml;
             }
             else
             {
@@ -171,30 +165,32 @@ namespace SimOn
             }
         }
 
-        private void ActualizaStatusRato(string mensagemStatus = "")
+        private void UpdateStatus(string statusMessage = "")
         {
             // Este evento é disparado no load do form e nessa altura a lblStatus ainda não existe.
             if (lblStatus != null)
             {
-                lblStatus.Content = mensagemStatus;
+                lblStatus.Content = statusMessage;
             }
-            if (mensagemStatus == "")
+            if (String.IsNullOrEmpty(statusMessage))
             {
                 Cursor = Cursors.Arrow;
+                IsEnabled = true;
             }
             else
             {
                 Cursor = Cursors.Wait;
+                IsEnabled = false;
             }
         }
 
-        private void BuscarPreencheMarcas()
+        private void FetchUpdateBrands()
         {
-            ActualizaStatusRato("A procurar as marcas disponiveis...");
-            var taskFetchedMarcas = Task.Run(() =>
+            UpdateStatus("A procurar as marcas disponiveis...");
+            Task.Run(() =>
             {
-                List<Marca> marcas = DataLayer.GetMarcas(DataSource);
-                CarregaMarcas(marcas);
+                List<Brand> marcas = DataLayer.FetchBrands(DataSource);
+                UpdateCbBrands(marcas);
             });
         }
 

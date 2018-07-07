@@ -3,73 +3,82 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace SimOn
 {
-    class DataLayerXml
+    /// <summary>
+    /// Fetch vehicle information from a xml file  
+    /// </summary>
+    internal static class DataLayerXml
     {
-        #region Definicao de variaveis
-        private static readonly string ficheiroXml = "Dados/l201803C.xml";
-        #endregion
+        private const string ficheiroXml = "Dados/l201803C.xml";
 
-        #region Metodos internos
-        internal static List<Marca> GetMarcas()
+        internal static List<Brand> FetchBrands()
         {
-            bool perdicate(Marca x) => true;
-            List<Marca> marcas = new List<Marca>(GetViaturas(perdicate));
+            bool perdicate(Brand x) => true;
+            List<Brand> marcas = new List<Brand>(FetchCars(perdicate));
             var marcasDistincts = marcas.Distinct(new DataExtractorElementComparer());
-            List<Marca> marcasRetorno = marcasDistincts.ToList();
+            List<Brand> marcasRetorno = marcasDistincts.ToList();
             return marcasRetorno; 
         }
 
-        internal static List<MarcaModelo> GetModelos(Marca marca)
+        internal static List<Model> FetchModels(Brand marca)
         {
-            bool perdicate(Viatura x) => x.DescricaoMarca == marca.DescricaoMarca;
-            List<MarcaModelo> modelos = new List<MarcaModelo>(GetViaturas(perdicate));
+            bool perdicate(Car x) => x.BrandDescription == marca.BrandDescription;
+            List<Model> modelos = new List<Model>(FetchCars(perdicate));
             return modelos.Distinct().ToList();
         }
 
-        internal static List<MarcaModeloVersao> GetVersoes(MarcaModelo modelo)
+        internal static List<Version> FetchVersions(Model modelo)
         {
-            bool perdicate(Viatura x) => x.DescricaoMarca == modelo.DescricaoMarca &&
-                                                 x.DescricaoModelo == modelo.DescricaoModelo;
-            List<MarcaModeloVersao> versoes = GetViaturas(perdicate).Cast<MarcaModeloVersao>().ToList();
+            bool perdicate(Car x) => x.BrandDescription == modelo.BrandDescription &&
+                                                 x.ModelDescription == modelo.ModelDescription;
+            List<Version> versoes = FetchCars(perdicate).Cast<Version>().ToList();
             return versoes;
         }
 
-        internal static Viatura GetViatura(MarcaModeloVersao versao)
+        internal static Car FetchCar(Version versao)
         {
-            bool perdicate(Viatura x) => x.DescricaoMarca == versao.DescricaoMarca &&
-                                                 x.DescricaoModelo == versao.DescricaoModelo &&
-                                                 x.DescricaoVersao == versao.DescricaoVersao;
-            List<Viatura> viaturas = GetViaturas(perdicate);
+            bool perdicate(Car x) => x.BrandDescription == versao.BrandDescription &&
+                                                 x.ModelDescription == versao.ModelDescription &&
+                                                 x.VersionDescription == versao.VersionDescription;
+            List<Car> viaturas = FetchCars(perdicate);
             return viaturas.FirstOrDefault();
         }
 
-        internal static List<Viatura> GetViaturas(Func<Viatura,bool> perdicate)
+        internal static List<Car> FetchCars(Func<Car,bool> perdicate)
         {
             System.Xml.Linq.XElement eurotax = System.Xml.Linq.XElement.Load(ficheiroXml);
-            List<Viatura> viaturas = eurotax.Elements("NewsItemRow").Select( x =>
-                                    new Viatura { DescricaoMarca = (string)x.Element("MARCA"),
-                                                  DescricaoModelo = (string)x.Element("MODELO"),
-                                                  DescricaoVersao = (string)x.Element("VERSAO"),
-                                                  PrecoNovo = Convert.ToDouble((string)x.Element("PNOVO"))
+            List<Car> viaturas = eurotax.Elements("NewsItemRow").Select( x =>
+                                    new Car { BrandDescription = (string)x.Element("BRAND"),
+                                                  ModelDescription = (string)x.Element("MODEL"),
+                                                  VersionDescription = (string)x.Element("VERSION"),
+                                                  Price = Convert.ToDouble((string)x.Element("PRICE"), CultureInfo.CurrentCulture)
                                     }).Where(perdicate).ToList();
             return viaturas;
         }
-        #endregion
     }
-    class DataExtractorElementComparer : IEqualityComparer<Marca>
+
+    class DataExtractorElementComparer : IEqualityComparer<Brand>
     {
 
-        public bool Equals(Marca x, Marca y)
+        public bool Equals(Brand x, Brand y)
         {
-            return x.DescricaoMarca == y.DescricaoMarca;
+            if ( x == null && y == null)
+            {
+                return true;
+            }
+            if (x == null || y == null)
+            {
+                return false;
+            }
+            return x.BrandDescription == y.BrandDescription;
         }
 
-        public int GetHashCode(Marca obj)
+        public int GetHashCode(Brand obj)
         {
-            return obj.DescricaoMarca.GetHashCode();
+            return obj == null ? 0 : obj.BrandDescription.GetHashCode();
         }
     }
 }

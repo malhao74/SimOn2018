@@ -2,16 +2,18 @@
 
 namespace SimOn
 {
-    class FirebaseResponse
+    /// <summary>
+    /// Class to handle firebase responses
+    /// </summary>
+    internal class FirebaseResponse
     {
-        #region Declaracao de variaveis
-        public bool Success;
-        public string JSONContent;
-        public string ErrorMessage;
-        public HttpResponseMessage HttpResponse;
+        #region Properties
+        public bool Success { get; set; }
+        public string JSONContent { get; set; }
+        public string ErrorMessage { get; set; }
+        public HttpResponseMessage HttpResponse { get; set; }
         #endregion
 
-        #region Metodos publicos
         public FirebaseResponse()
         { }
 
@@ -22,6 +24,5 @@ namespace SimOn
             this.HttpResponse = httpResponse;
             this.JSONContent = jsonContent;
         }
-        #endregion
     }
 }

@@ -6,74 +6,71 @@ using System.Threading.Tasks;
 
 namespace SimOn
 {
-    public enum DataSource { Excel, XML, FireBase }
+    public enum DataSource { Excel, Xml, FireBase }
 
     /// <summary>
-    /// Disponibiliza um layer entre o interface do utlizador e os dados
+    /// Provides a layer between the UI and the multiple data layers
     /// </summary>
-    class DataLayer
+    internal static class DataLayer
     {
-        #region Metodos publicos
-        public static List<Marca> GetMarcas(DataSource dataSource)
+        public static List<Brand> FetchBrands(DataSource dataSource)
         {
             switch (dataSource)
             {
                 case DataSource.Excel:
-                    return DataLayerExcel.GetMarcas();
-                case DataSource.XML:
-                    return DataLayerXml.GetMarcas();
+                    return DataLayerExcel.FetchBrands();
+                case DataSource.Xml:
+                    return DataLayerXml.FetchBrands();
                 case DataSource.FireBase:
-                    return DataLayerFireBase.GetMarcas(); ;
+                    return DataLayerFireBase.FetchBrands(); ;
                 default:
                     return null;
             }
         }
 
-        public static List<MarcaModelo> GetModelos(DataSource dataSource, Marca marca)
+        public static List<Model> FetchModels(DataSource dataSource, Brand marca)
         {
             switch (dataSource)
             {
                 case DataSource.Excel:
-                    return DataLayerExcel.GetModelos(marca);
-                case DataSource.XML:
-                    return DataLayerXml.GetModelos(marca);
+                    return DataLayerExcel.FetchModels(marca);
+                case DataSource.Xml:
+                    return DataLayerXml.FetchModels(marca);
                 case DataSource.FireBase:
-                    return DataLayerFireBase.GetModelos(marca);
+                    return DataLayerFireBase.FetchModels(marca);
                 default:
                     return null;
             }
         }
 
-        public static List<MarcaModeloVersao> GetVersoes(DataSource dataSource, MarcaModelo modelo)
+        public static List<Version> FetchVersions(DataSource dataSource, Model modelo)
         {
             switch (dataSource)
             {
                 case DataSource.Excel:
-                    return DataLayerExcel.GetVersoes(modelo);
-                case DataSource.XML:
-                    return DataLayerXml.GetVersoes(modelo);
+                    return DataLayerExcel.FetchVersions(modelo);
+                case DataSource.Xml:
+                    return DataLayerXml.FetchVersions(modelo);
                 case DataSource.FireBase:
-                    return DataLayerFireBase.GetVersoes(modelo);
+                    return DataLayerFireBase.FetchVersions(modelo);
                 default:
                     return null;
             }
         }
 
-        public static Viatura GetViatura(DataSource dataSource, MarcaModeloVersao versao)
+        public static Car FetchCar(DataSource dataSource, Version versao)
         {
             switch (dataSource)
             {
                 case DataSource.Excel:
-                    return DataLayerExcel.GetViatura(versao);
-                case DataSource.XML:
-                    return DataLayerXml.GetViatura(versao);
+                    return DataLayerExcel.FetchCar(versao);
+                case DataSource.Xml:
+                    return DataLayerXml.FetchCar(versao);
                 case DataSource.FireBase:
-                    return DataLayerFireBase.GetViatura(versao);
+                    return DataLayerFireBase.FetchCar(versao);
                 default:
                     return null;
             }
         }
-
-        #endregion
     }
 }

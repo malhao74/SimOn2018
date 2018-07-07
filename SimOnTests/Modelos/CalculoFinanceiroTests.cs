@@ -14,7 +14,7 @@ namespace SimOn.Tests
         [TestMethod()]
         public void CalculoFinanceiroTestCredito()
         {
-            Produto produto = Produto.credito;
+            FinancialProduct produto = FinancialProduct.Credit;
             double pvp = 9900;
             double entradaInicial = 0;
             double residual = 0;
@@ -23,9 +23,9 @@ namespace SimOn.Tests
 
             double prestacaoEsperada = 571.30;
 
-            CalculoFinanceiro calculoFinanceiro = new CalculoFinanceiro(produto, pvp, entradaInicial, residual, duracacao, taxa);
+            FinancialCalculation calculoFinanceiro = new FinancialCalculation(produto, pvp, entradaInicial, residual, duracacao, taxa);
 
-            Assert.AreEqual(prestacaoEsperada, calculoFinanceiro.Mensalidade);
+            Assert.AreEqual(prestacaoEsperada, calculoFinanceiro.MonthlyPayment);
         }
     }
 }
