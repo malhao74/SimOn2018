@@ -66,7 +66,11 @@ namespace SimOn
             }
         }
 
-        // Escolheu um modelo, vai buscar as versões associadas ao modelo.
+        /// <summary>
+        /// If the model changes, it updates the versions available
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CbModelos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
@@ -82,7 +86,11 @@ namespace SimOn
             }
         }
 
-        // Escolheu uma versao, vai o preço da mesma.
+        /// <summary>
+        /// When a new version is chosen, it updates the price
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CbVersoes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
@@ -98,7 +106,11 @@ namespace SimOn
             }
         }
 
-        // Quando um dos radiobuttons da datasource e carregado, define a datasource a usar.
+        /// <summary>
+        /// Clears the information on the form, defines the data source based on the radio button pressed and load the brand available
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Rb_Checked(object sender, RoutedEventArgs e)
         {
             ClearScreen();
@@ -148,7 +160,9 @@ namespace SimOn
             }), car);
         }
 
-        // Define a datasource a usar com base nos radiobuttons.
+        /// <summary>
+        /// Defines the data source based on the radio button pressed
+        /// </summary>
         private void SetDataSource()
         {
             if (rbExcel.IsChecked == true)
@@ -167,7 +181,6 @@ namespace SimOn
 
         private void UpdateStatus(string statusMessage = "")
         {
-            // Este evento é disparado no load do form e nessa altura a lblStatus ainda não existe.
             if (lblStatus != null)
             {
                 lblStatus.Content = statusMessage;

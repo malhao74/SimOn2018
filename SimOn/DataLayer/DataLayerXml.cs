@@ -12,7 +12,7 @@ namespace SimOn
     /// </summary>
     internal static class DataLayerXml
     {
-        private const string ficheiroXml = "Dados/l201803C.xml";
+        private const string xmlFile = "Dados/l201803C.xml";
 
         internal static List<Brand> FetchBrands()
         {
@@ -49,7 +49,7 @@ namespace SimOn
 
         internal static List<Car> FetchCars(Func<Car,bool> perdicate)
         {
-            System.Xml.Linq.XElement eurotax = System.Xml.Linq.XElement.Load(ficheiroXml);
+            System.Xml.Linq.XElement eurotax = System.Xml.Linq.XElement.Load(xmlFile);
             List<Car> viaturas = eurotax.Elements("NewsItemRow").Select( x =>
                                     new Car { BrandDescription = (string)x.Element("BRAND"),
                                                   ModelDescription = (string)x.Element("MODEL"),
